@@ -23,7 +23,9 @@
           .replace(/^import\s+.*?from\s+['"].*?['"];?\n?/gm, '')
           .replace(/^export default\s+/m, '');
 
+        // Re-expose React hooks as globals since the import was stripped
         const fullCode =
+          'const { useState, useEffect, useRef, useCallback, useMemo } = React;\n' +
           stripped +
           '\nReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));';
 
