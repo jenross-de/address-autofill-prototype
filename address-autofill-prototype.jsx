@@ -17,16 +17,17 @@ const EXISTING_ADDRESS = {
 
 // ─── Styles ───
 const colors = {
-  teal: "#4a9b8e",
-  tealLight: "#f0f9f5",
-  tealDark: "#2d7a6a",
+  teal: "#3a8fa3",
+  tealLight: "#edf6f9",
+  tealDark: "#2a7a8e",
   gray: "#d0d0d0",
   grayDark: "#333",
   grayMed: "#888",
   grayLight: "#bbb",
-  grayBg: "#f7f7f7",
+  grayBg: "#efefef",
   sidebar: "#3d4548",
-  greenLabel: "#4a9b8e",
+  sidebarActive: "#4caf50",
+  greenLabel: "#3a8fa3",
   error: "#ea1d35",
   warn: "#fffbe6",
   warnBorder: "#eed86a",
@@ -34,7 +35,7 @@ const colors = {
 };
 
 const s = {
-  wrapper: { fontFamily: "Arial, sans-serif", maxWidth: 780, margin: "0 auto", padding: "0" },
+  wrapper: { fontFamily: "Arial, sans-serif", maxWidth: 860, margin: "0 auto", padding: "0", background: colors.grayBg, minHeight: "100vh" },
   tabBar: { display: "flex", gap: 0, marginBottom: 20, borderBottom: `2px solid ${colors.gray}` },
   tab: (active) => ({
     padding: "10px 20px",
@@ -78,23 +79,25 @@ const s = {
     opacity: available ? 1 : 0.4,
   }),
   stepLabel: { fontSize: 12, color: colors.grayMed, marginBottom: 12, lineHeight: 1.5 },
-  crmFrame: { background: colors.grayBg, borderRadius: 8, overflow: "hidden", border: `1px solid #e0e0e0` },
+  crmFrame: { background: "white", overflow: "hidden", border: `1px solid #ddd`, marginTop: 0 },
+  crmTopBar: { background: "white", borderBottom: "1px solid #e0e0e0", padding: "10px 0", display: "flex", justifyContent: "center", alignItems: "center" },
+  crmTopSearch: { width: 340, height: 34, border: "1px solid #d0d0d0", borderRadius: 4, padding: "0 14px", fontSize: 13, color: "#aaa", background: "white", boxSizing: "border-box", fontFamily: "Arial, sans-serif", display: "flex", alignItems: "center" },
   crmLayout: { display: "flex" },
-  sidebar: { width: 40, background: colors.sidebar, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 12, gap: 14, flexShrink: 0, minHeight: 400 },
-  sideIcon: (active) => ({ width: 18, height: 18, opacity: active ? 1 : 0.3 }),
+  sidebar: { width: 64, background: colors.sidebar, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 14, gap: 16, flexShrink: 0, minHeight: 460 },
+  sideIcon: (active) => ({ width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", borderLeft: active ? `3px solid ${colors.sidebarActive}` : "3px solid transparent", paddingLeft: 2 }),
   body: { flex: 1, background: "white", display: "flex" },
-  main: { flex: 1, padding: "14px 20px 20px" },
-  rightPanel: { width: 190, borderLeft: "1px solid #e5e5e5", padding: "14px 16px" },
-  header: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 },
-  title: { fontSize: 17, fontWeight: 400, color: colors.grayDark, fontStyle: "italic" },
-  btnCancel: { fontSize: 12, padding: "5px 14px", borderRadius: 3, border: "1px solid #ccc", background: "white", color: "#555", cursor: "pointer", marginRight: 6 },
-  btnSave: { fontSize: 12, padding: "5px 14px", borderRadius: 3, border: "none", background: colors.teal, color: "white", cursor: "pointer" },
-  field: { marginBottom: 10 },
-  label: { fontSize: 11, color: colors.grayMed, marginBottom: 3, display: "block" },
-  labelGreen: { fontSize: 11, color: colors.greenLabel, marginBottom: 3, display: "block" },
+  main: { flex: 1, padding: "18px 24px 24px" },
+  rightPanel: { width: 240, borderLeft: "1px solid #e5e5e5", padding: "16px 18px", background: "white" },
+  header: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 },
+  title: { fontSize: 18, fontWeight: 500, color: colors.grayDark },
+  btnCancel: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "1px solid #ccc", background: "white", color: "#555", cursor: "pointer", marginRight: 6 },
+  btnSave: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "none", background: colors.teal, color: "white", cursor: "pointer" },
+  field: { marginBottom: 14 },
+  label: { fontSize: 12, color: colors.grayMed, marginBottom: 4, display: "block" },
+  labelGreen: { fontSize: 12, color: colors.greenLabel, marginBottom: 4, display: "block" },
   input: (variant) => ({
     width: "100%",
-    height: 32,
+    height: 36,
     border: `1px solid ${variant === "autofill" ? colors.teal : variant === "focus" ? colors.teal : variant === "error" ? colors.error : colors.gray}`,
     padding: "0 10px",
     fontSize: 13,
@@ -110,7 +113,7 @@ const s = {
   }),
   select: (variant) => ({
     width: "100%",
-    height: 32,
+    height: 36,
     border: `1px solid ${variant === "autofill" ? colors.teal : colors.gray}`,
     padding: "0 28px 0 10px",
     fontSize: 13,
@@ -189,19 +192,28 @@ function Dot() {
 }
 
 function SidebarNav() {
+  const icons = [
+    // home
+    <svg key="home" viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M3 9l7-6 7 6v8a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" stroke="white" strokeWidth="1.4"/></svg>,
+    // people (active)
+    <svg key="people" viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="8" cy="7" r="3" stroke="white" strokeWidth="1.4"/><circle cx="13" cy="7" r="3" stroke="white" strokeWidth="1.4"/><path d="M1 17c0-3 3-5 7-5s7 2 7 5" stroke="white" strokeWidth="1.4"/></svg>,
+    // campaigns (asterisk/star)
+    <svg key="camp" viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="10" cy="10" r="2" stroke="white" strokeWidth="1.4"/><path d="M10 3v4M10 13v4M3 10h4M13 10h4M5.6 5.6l2.8 2.8M11.6 11.6l2.8 2.8M14.4 5.6l-2.8 2.8M8.4 11.6l-2.8 2.8" stroke="white" strokeWidth="1.4" strokeLinecap="round"/></svg>,
+    // reports (pie)
+    <svg key="rep" viewBox="0 0 20 20" fill="none" width="18" height="18"><path d="M10 10L10 3A7 7 0 0117 10z" stroke="white" strokeWidth="1.4"/><circle cx="10" cy="10" r="7" stroke="white" strokeWidth="1.4"/></svg>,
+    // messages
+    <svg key="msg" viewBox="0 0 20 20" fill="none" width="18" height="18"><rect x="2" y="4" width="16" height="11" rx="1.5" stroke="white" strokeWidth="1.4"/><path d="M6 15l4 3 4-3" stroke="white" strokeWidth="1.4"/></svg>,
+    // payments
+    <svg key="pay" viewBox="0 0 20 20" fill="none" width="18" height="18"><rect x="2" y="5" width="16" height="12" rx="1.5" stroke="white" strokeWidth="1.4"/><path d="M2 9h16" stroke="white" strokeWidth="1.4"/></svg>,
+    // settings
+    <svg key="set" viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="10" cy="10" r="2.5" stroke="white" strokeWidth="1.4"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.2 4.2l1.4 1.4M14.4 14.4l1.4 1.4M15.8 4.2l-1.4 1.4M5.6 14.4l-1.4 1.4" stroke="white" strokeWidth="1.4" strokeLinecap="round"/></svg>,
+  ];
   return (
     <div style={s.sidebar}>
-      {["M3 8l7-5 7 5v8a1 1 0 01-1 1H4a1 1 0 01-1-1V8z", null].map((_, i) => (
+      {icons.map((icon, i) => (
         <div key={i} style={s.sideIcon(i === 1)}>
-          <svg viewBox="0 0 20 20" fill="none" width="18" height="18">
-            {i === 0 && <path d="M3 8l7-5 7 5v8a1 1 0 01-1 1H4a1 1 0 01-1-1V8z" stroke="white" strokeWidth="1.3" />}
-            {i === 1 && (
-              <>
-                <circle cx="8" cy="7" r="3" stroke="white" strokeWidth="1.3" />
-                <circle cx="13" cy="7" r="3" stroke="white" strokeWidth="1.3" />
-                <path d="M2 17c0-3 3-5 6-5s6 2 6 5" stroke="white" strokeWidth="1.3" />
-              </>
-            )}
+          <svg viewBox="0 0 20 20" fill="none" width="18" height="18" style={{ opacity: i === 1 ? 1 : 0.35 }}>
+            {icon.props.children}
           </svg>
         </div>
       ))}
@@ -817,6 +829,9 @@ export default function App() {
 
       {/* CRM Frame */}
       <div style={s.crmFrame}>
+        <div style={s.crmTopBar}>
+          <div style={s.crmTopSearch}>Search for constituents</div>
+        </div>
         <div style={s.crmLayout}>
           <SidebarNav />
           <div style={s.body}>
@@ -829,8 +844,10 @@ export default function App() {
               )}
             </div>
             <div style={s.rightPanel}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: "#333", marginBottom: 8 }}>Other Addresses</div>
-              <div style={{ fontSize: 13, color: "#999" }}>None</div>
+              <div style={{ border: "1px solid #e0e0e0", borderRadius: 2 }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: "#333", padding: "10px 14px", borderBottom: "1px solid #e0e0e0" }}>Other Addresses</div>
+                <div style={{ fontSize: 13, color: "#999", padding: "10px 14px" }}>None</div>
+              </div>
             </div>
           </div>
         </div>
