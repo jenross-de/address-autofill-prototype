@@ -126,8 +126,8 @@ const s = {
     opacity: variant === "dim" ? 0.45 : 1,
   }),
   row: { display: "flex", gap: 12 },
-  searchWrap: { marginBottom: 10, paddingBottom: 10, borderBottom: "1px dashed #ddd" },
-  searchLabel: { fontSize: 10, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em", color: "#999", marginBottom: 3 },
+  searchWrap: { marginBottom: 10 },
+  searchLabel: { fontSize: 12, color: colors.grayMed, marginBottom: 4, display: "block" },
   searchInput: (active) => ({
     width: "100%",
     height: 34,
@@ -344,7 +344,7 @@ function OptionAForm({ flow, step }) {
           <SearchField idle sublabel="" />
           <Field label="Address" value="" variant="placeholder" />
           <Field label="City" value="" variant="placeholder" />
-          <SelectField label="State" value="—" variant="placeholder" />
+          <SelectField label="State" value="" variant="placeholder" />
           <Field label="ZIP Code" value="" variant="placeholder" />
           <SelectField label="Type" value="Home" green />
           <Checks />
@@ -365,12 +365,10 @@ function OptionAForm({ flow, step }) {
               <DropdownResults results={MOCK_RESULTS} onSelect={() => {}} />
             </div>
           </div>
-          <div style={{ borderTop: "1px dashed #ddd", paddingTop: 8 }}>
-            <Field label="Address" value="" variant="placeholder" />
-            <Field label="City" value="" variant="placeholder" />
-            <SelectField label="State" value="—" variant="placeholder" />
-            <Field label="ZIP Code" value="" variant="placeholder" />
-          </div>
+          <Field label="Address" value="" variant="placeholder" />
+          <Field label="City" value="" variant="placeholder" />
+          <SelectField label="State" value="" variant="placeholder" />
+          <Field label="ZIP Code" value="" variant="placeholder" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -465,12 +463,10 @@ function OptionAForm({ flow, step }) {
               <POBoxWarning />
             </div>
           </div>
-          <div style={{ borderTop: "1px dashed #ddd", paddingTop: 8 }}>
-            <Field label="Address" value="" variant="placeholder" />
-            <Field label="City" value="" variant="placeholder" />
-            <SelectField label="State" value="—" variant="placeholder" />
-            <Field label="ZIP Code" value="" variant="placeholder" />
-          </div>
+          <Field label="Address" value="PO Box 1234" variant="focus" />
+          <Field label="City" value="Zionsville" />
+          <SelectField label="State" value="" variant="placeholder" />
+          <Field label="ZIP Code" value="" variant="placeholder" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -503,7 +499,7 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ marginBottom: 10 }}>
-            <label style={{ ...s.label, fontSize: 11, fontWeight: 500 }}>Street Address</label>
+            <label style={s.label}>Address</label>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(false)}>
                 <SearchIcon />
@@ -524,7 +520,7 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ marginBottom: 10 }}>
-            <label style={{ ...s.label, fontSize: 11, fontWeight: 500 }}>Street Address</label>
+            <label style={s.label}>Address</label>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
@@ -558,21 +554,11 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
+          <SearchField idle sublabel="— or edit fields below" />
           <Field label="Address" value={EXISTING_ADDRESS.line1} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
-          <div style={{ marginBottom: 10, marginTop: 4 }}>
-            <div style={{ fontSize: 10, color: colors.teal, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 3 }}>
-              Search for a new address
-            </div>
-            <div style={{ position: "relative" }}>
-              <div style={s.searchInput(false)}>
-                <SearchIcon />
-                <span style={{ marginLeft: 22 }}>Type to search and replace...</span>
-              </div>
-            </div>
-          </div>
           <SelectField label="Type" value="Home" green />
           <Checks primaryChecked />
         </>
@@ -582,14 +568,8 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
-          <Field label="Address" value={EXISTING_ADDRESS.line1} variant="dim" />
-          <Field label="City" value={EXISTING_ADDRESS.city} variant="dim" />
-          <SelectField label="State" value={EXISTING_ADDRESS.state} variant="dim" />
-          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} variant="dim" />
-          <div style={{ marginBottom: 10, marginTop: 4 }}>
-            <div style={{ fontSize: 10, color: colors.teal, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 3 }}>
-              Search for a new address
-            </div>
+          <div style={{ marginBottom: 10 }}>
+            <div style={s.searchLabel}>Search for an address</div>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
@@ -602,6 +582,10 @@ function OptionBForm({ flow, step }) {
               onCancel={() => {}}
             />
           </div>
+          <Field label="Address" value={EXISTING_ADDRESS.line1} variant="dim" />
+          <Field label="City" value={EXISTING_ADDRESS.city} variant="dim" />
+          <SelectField label="State" value={EXISTING_ADDRESS.state} variant="dim" />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} variant="dim" />
           <SelectField label="Type" value="Home" green />
           <Checks primaryChecked />
         </>
@@ -611,21 +595,11 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
+          <SearchField idle sublabel="— or edit fields below" />
           <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
           <Field label="City" value="Indianapolis" variant="autofill" />
           <SelectField label="State" value="IN" variant="autofill" />
           <Field label="ZIP Code" value="46204" variant="autofill" />
-          <div style={{ marginBottom: 10, marginTop: 4 }}>
-            <div style={{ fontSize: 10, color: colors.teal, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 3 }}>
-              Search for a new address
-            </div>
-            <div style={{ position: "relative" }}>
-              <div style={s.searchInput(false)}>
-                <SearchIcon />
-                <span style={{ marginLeft: 22 }}>Type to search and replace...</span>
-              </div>
-            </div>
-          </div>
           <SelectField label="Type" value="Home" green />
           <Checks primaryChecked />
         </>
@@ -639,7 +613,7 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ marginBottom: 10 }}>
-            <label style={{ ...s.label, fontSize: 11, fontWeight: 500 }}>Street Address</label>
+            <label style={s.label}>Address</label>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
@@ -648,6 +622,9 @@ function OptionBForm({ flow, step }) {
               <POBoxWarning />
             </div>
           </div>
+          <Field label="City" value="Zionsville" />
+          <SelectField label="State" value="" variant="placeholder" />
+          <Field label="ZIP Code" value="" variant="placeholder" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -657,9 +634,7 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
-          <div style={{ marginBottom: 10, padding: "8px 10px", background: "#f9f9f9", borderRadius: 4, border: "1px solid #eee" }}>
-            <div style={{ fontSize: 10, color: colors.grayMed, marginBottom: 4 }}>Search didn't find a match. Entering manually:</div>
-          </div>
+          <SearchField idle />
           <Field label="Address" value="PO Box 1234" variant="focus" />
           <Field label="City" value="Zionsville" />
           <SelectField label="State" value="IN" />
@@ -688,8 +663,8 @@ const STEP_LABELS = {
       "After Replace: all address fields updated with the validated address.",
     ],
     noResults: [
-      "User types 'PO Box...' — warning appears immediately below the search field. PO Boxes aren't supported.",
-      "User enters address manually in the fields below. Search remains available to retry.",
+      "User types 'PO Box...' — warning appears immediately. Address and City are parsed from the typed text and pre-filled.",
+      "User corrects address manually. Search remains available to retry.",
     ],
   },
   B: {
@@ -699,13 +674,13 @@ const STEP_LABELS = {
       "User selects a result. Address, City, State, ZIP fields appear and populate. Progressive disclosure.",
     ],
     edit: [
-      "Existing address shows all fields (they have data). Search field sits below the form as 'Search for a new address'.",
-      "User types in search. Confirmation bar appears. Existing fields dim. Same confirm/cancel pattern.",
-      "After Replace: fields updated with validated address. Search resets below the form.",
+      "Existing address shows all fields. Search field sits above, same as new address flow.",
+      "User types in search. Confirmation bar appears. Existing fields dim.",
+      "After Replace: fields updated with validated address.",
     ],
     noResults: [
-      "User types 'PO Box...' in street field — warning appears immediately. PO Boxes aren't supported.",
-      "All fields expand for manual entry. User fills them in. Search field available to retry.",
+      "User types 'PO Box...' — warning appears immediately. City is parsed from the typed text and pre-filled.",
+      "User corrects address manually. Search available above to retry.",
     ],
   },
 };
