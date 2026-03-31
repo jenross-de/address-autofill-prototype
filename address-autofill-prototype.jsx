@@ -12,7 +12,6 @@ const EXISTING_ADDRESS = {
   city: "Indpls",
   state: "IN",
   zip: "46201",
-  badAddress: true,
 };
 
 // ─── Styles ───
@@ -259,14 +258,11 @@ function SelectField({ label, value, variant = "default", green, style: extraSty
   );
 }
 
-function Checks({ primaryChecked = true, badChecked = false }) {
+function Checks({ primaryChecked = true }) {
   return (
     <div style={s.checkRow}>
       <div style={s.checkItem}>
         <div style={s.checkBox(primaryChecked)}>{primaryChecked ? "✓" : ""}</div> Primary?
-      </div>
-      <div style={s.checkItem}>
-        <div style={s.checkBox(badChecked)}>{badChecked ? "✓" : ""}</div> Bad Address?
       </div>
     </div>
   );
@@ -301,13 +297,10 @@ function DropdownResults({ results, onSelect }) {
   );
 }
 
-function ConfirmBar({ address, hasBadFlag, onReplace, onCancel }) {
+function ConfirmBar({ address, onReplace, onCancel }) {
   return (
     <div style={s.confirm}>
       Replace current address with <strong style={{ color: colors.grayDark }}>{address.line1}, {address.city}, {address.state} {address.zip}</strong>?
-      <div style={s.confirmNote}>
-        {hasBadFlag && '"Bad Address" flag will be cleared.'}
-      </div>
       <div style={s.confirmBtns}>
         <button onClick={onReplace} style={{ ...s.btnSave, fontSize: 12, padding: "5px 14px" }}>Replace</button>
         <button onClick={onCancel} style={{ ...s.btnCancel, fontSize: 12, padding: "5px 14px", marginRight: 0 }}>Cancel</button>
@@ -322,6 +315,16 @@ function NoResultsMessage() {
       <strong style={{ color: "#555" }}>No matching addresses found.</strong>
       <br />
       Enter the address manually in the fields below.
+    </div>
+  );
+}
+
+function POBoxWarning() {
+  return (
+    <div style={{ ...s.noResults, background: "#fff8e1", border: `1px solid ${colors.warnBorder}`, borderTop: "none", color: colors.warnText }}>
+      <strong style={{ color: "#665a00" }}>PO Boxes aren't supported.</strong>
+      <br />
+      Please enter a deliverable street address instead.
     </div>
   );
 }
@@ -341,10 +344,8 @@ function OptionAForm({ flow, step }) {
           <SearchField idle sublabel="" />
           <Field label="Address" value="" variant="placeholder" />
           <Field label="City" value="" variant="placeholder" />
-          <div style={s.row}>
-            <SelectField label="State" value="—" variant="placeholder" style={{ flex: 1 }} />
-            <Field label="ZIP Code" value="" variant="placeholder" style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value="—" variant="placeholder" />
+          <Field label="ZIP Code" value="" variant="placeholder" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -367,10 +368,8 @@ function OptionAForm({ flow, step }) {
           <div style={{ borderTop: "1px dashed #ddd", paddingTop: 8 }}>
             <Field label="Address" value="" variant="placeholder" />
             <Field label="City" value="" variant="placeholder" />
-            <div style={s.row}>
-              <SelectField label="State" value="—" variant="placeholder" style={{ flex: 1 }} />
-              <Field label="ZIP Code" value="" variant="placeholder" style={{ flex: 1 }} />
-            </div>
+            <SelectField label="State" value="—" variant="placeholder" />
+            <Field label="ZIP Code" value="" variant="placeholder" />
           </div>
           <SelectField label="Type" value="Home" green />
           <Checks />
@@ -384,10 +383,8 @@ function OptionAForm({ flow, step }) {
           <SearchField idle />
           <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
           <Field label="City" value="Indianapolis" variant="autofill" />
-          <div style={s.row}>
-            <SelectField label="State" value="IN" variant="autofill" style={{ flex: 1 }} />
-            <Field label="ZIP Code" value="46204" variant="autofill" style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value="IN" variant="autofill" />
+          <Field label="ZIP Code" value="46204" variant="autofill" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -403,12 +400,10 @@ function OptionAForm({ flow, step }) {
           <SearchField idle sublabel="— or edit fields below" />
           <Field label="Address" value={EXISTING_ADDRESS.line1} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
-          <div style={s.row}>
-            <SelectField label="State" value={EXISTING_ADDRESS.state} style={{ flex: 1 }} />
-            <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value={EXISTING_ADDRESS.state} />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
           <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked badChecked />
+          <Checks primaryChecked />
         </>
       );
     }
@@ -426,19 +421,16 @@ function OptionAForm({ flow, step }) {
             </div>
             <ConfirmBar
               address={MOCK_RESULTS[0]}
-            hasBadFlag={true}
               onReplace={() => {}}
               onCancel={() => {}}
             />
           </div>
           <Field label="Address" value={EXISTING_ADDRESS.line1} variant="dim" />
           <Field label="City" value={EXISTING_ADDRESS.city} variant="dim" />
-          <div style={s.row}>
-            <SelectField label="State" value={EXISTING_ADDRESS.state} variant="dim" style={{ flex: 1 }} />
-            <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} variant="dim" style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value={EXISTING_ADDRESS.state} variant="dim" />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} variant="dim" />
           <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked badChecked />
+          <Checks primaryChecked />
         </>
       );
     }
@@ -449,12 +441,10 @@ function OptionAForm({ flow, step }) {
           <SearchField idle sublabel="— or edit fields below" />
           <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
           <Field label="City" value="Indianapolis" variant="autofill" />
-          <div style={s.row}>
-            <SelectField label="State" value="IN" variant="autofill" style={{ flex: 1 }} />
-            <Field label="ZIP Code" value="46204" variant="autofill" style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value="IN" variant="autofill" />
+          <Field label="ZIP Code" value="46204" variant="autofill" />
           <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked badChecked={false} />
+          <Checks primaryChecked />
         </>
       );
     }
@@ -472,16 +462,14 @@ function OptionAForm({ flow, step }) {
                 <SearchIcon />
                 <span style={{ marginLeft: 22 }}>PO Box 1234 Zionsville</span>
               </div>
-              <NoResultsMessage />
+              <POBoxWarning />
             </div>
           </div>
           <div style={{ borderTop: "1px dashed #ddd", paddingTop: 8 }}>
             <Field label="Address" value="" variant="placeholder" />
             <Field label="City" value="" variant="placeholder" />
-            <div style={s.row}>
-              <SelectField label="State" value="—" variant="placeholder" style={{ flex: 1 }} />
-              <Field label="ZIP Code" value="" variant="placeholder" style={{ flex: 1 }} />
-            </div>
+            <SelectField label="State" value="—" variant="placeholder" />
+            <Field label="ZIP Code" value="" variant="placeholder" />
           </div>
           <SelectField label="Type" value="Home" green />
           <Checks />
@@ -495,10 +483,8 @@ function OptionAForm({ flow, step }) {
           <SearchField idle />
           <Field label="Address" value="PO Box 1234" variant="focus" />
           <Field label="City" value="Zionsville" />
-          <div style={s.row}>
-            <SelectField label="State" value="IN" style={{ flex: 1 }} />
-            <Field label="ZIP Code" value="46077" style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value="IN" />
+          <Field label="ZIP Code" value="46077" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -558,10 +544,8 @@ function OptionBForm({ flow, step }) {
           <SelectField label="Country" value="United States" />
           <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
           <Field label="City" value="Indianapolis" variant="autofill" />
-          <div style={s.row}>
-            <SelectField label="State" value="IN" variant="autofill" style={{ flex: 1 }} />
-            <Field label="ZIP Code" value="46204" variant="autofill" style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value="IN" variant="autofill" />
+          <Field label="ZIP Code" value="46204" variant="autofill" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -576,10 +560,8 @@ function OptionBForm({ flow, step }) {
           <SelectField label="Country" value="United States" />
           <Field label="Address" value={EXISTING_ADDRESS.line1} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
-          <div style={s.row}>
-            <SelectField label="State" value={EXISTING_ADDRESS.state} style={{ flex: 1 }} />
-            <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value={EXISTING_ADDRESS.state} />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
           <div style={{ marginBottom: 10, marginTop: 4 }}>
             <div style={{ fontSize: 10, color: colors.teal, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 3 }}>
               Search for a new address
@@ -592,7 +574,7 @@ function OptionBForm({ flow, step }) {
             </div>
           </div>
           <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked badChecked />
+          <Checks primaryChecked />
         </>
       );
     }
@@ -602,10 +584,8 @@ function OptionBForm({ flow, step }) {
           <SelectField label="Country" value="United States" />
           <Field label="Address" value={EXISTING_ADDRESS.line1} variant="dim" />
           <Field label="City" value={EXISTING_ADDRESS.city} variant="dim" />
-          <div style={s.row}>
-            <SelectField label="State" value={EXISTING_ADDRESS.state} variant="dim" style={{ flex: 1 }} />
-            <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} variant="dim" style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value={EXISTING_ADDRESS.state} variant="dim" />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} variant="dim" />
           <div style={{ marginBottom: 10, marginTop: 4 }}>
             <div style={{ fontSize: 10, color: colors.teal, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 3 }}>
               Search for a new address
@@ -618,13 +598,12 @@ function OptionBForm({ flow, step }) {
             </div>
             <ConfirmBar
               address={MOCK_RESULTS[0]}
-            hasBadFlag={true}
               onReplace={() => {}}
               onCancel={() => {}}
             />
           </div>
           <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked badChecked />
+          <Checks primaryChecked />
         </>
       );
     }
@@ -634,10 +613,8 @@ function OptionBForm({ flow, step }) {
           <SelectField label="Country" value="United States" />
           <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
           <Field label="City" value="Indianapolis" variant="autofill" />
-          <div style={s.row}>
-            <SelectField label="State" value="IN" variant="autofill" style={{ flex: 1 }} />
-            <Field label="ZIP Code" value="46204" variant="autofill" style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value="IN" variant="autofill" />
+          <Field label="ZIP Code" value="46204" variant="autofill" />
           <div style={{ marginBottom: 10, marginTop: 4 }}>
             <div style={{ fontSize: 10, color: colors.teal, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: 3 }}>
               Search for a new address
@@ -650,7 +627,7 @@ function OptionBForm({ flow, step }) {
             </div>
           </div>
           <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked badChecked={false} />
+          <Checks primaryChecked />
         </>
       );
     }
@@ -668,7 +645,7 @@ function OptionBForm({ flow, step }) {
                 <SearchIcon />
                 <span style={{ marginLeft: 22 }}>PO Box 1234 Zionsville</span>
               </div>
-              <NoResultsMessage />
+              <POBoxWarning />
             </div>
           </div>
           <SelectField label="Type" value="Home" green />
@@ -685,10 +662,8 @@ function OptionBForm({ flow, step }) {
           </div>
           <Field label="Address" value="PO Box 1234" variant="focus" />
           <Field label="City" value="Zionsville" />
-          <div style={s.row}>
-            <SelectField label="State" value="IN" style={{ flex: 1 }} />
-            <Field label="ZIP Code" value="46077" style={{ flex: 1 }} />
-          </div>
+          <SelectField label="State" value="IN" />
+          <Field label="ZIP Code" value="46077" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -708,13 +683,13 @@ const STEP_LABELS = {
       "User selects a result. Fields populate instantly — no confirmation needed.",
     ],
     edit: [
-      "Form loads with existing data. Note 'Indpls' in City (non-standard) and 'Bad Address?' is checked.",
-      "User selects from search — confirmation bar appears inline. Fields dim. Note mentions Bad Address flag.",
-      "After Replace: all address fields updated. 'Bad Address?' auto-unchecked.",
+      "Form loads with existing data. Note 'Indpls' in City (non-standard).",
+      "User selects from search — confirmation bar appears inline. Existing fields dim.",
+      "After Replace: all address fields updated with the validated address.",
     ],
     noResults: [
-      "User types in search but API returns no results. Helpful message points to manual entry below.",
-      "User tabs to Address and enters manually. Search resets. Standard form behavior — no special interactions.",
+      "User types 'PO Box...' — warning appears immediately below the search field. PO Boxes aren't supported.",
+      "User enters address manually in the fields below. Search remains available to retry.",
     ],
   },
   B: {
@@ -726,10 +701,10 @@ const STEP_LABELS = {
     edit: [
       "Existing address shows all fields (they have data). Search field sits below the form as 'Search for a new address'.",
       "User types in search. Confirmation bar appears. Existing fields dim. Same confirm/cancel pattern.",
-      "After Replace: fields updated, Bad Address cleared. Search resets below the form.",
+      "After Replace: fields updated with validated address. Search resets below the form.",
     ],
     noResults: [
-      "User types in street address field. No results. Message tells user to enter manually.",
+      "User types 'PO Box...' in street field — warning appears immediately. PO Boxes aren't supported.",
       "All fields expand for manual entry. User fills them in. Search field available to retry.",
     ],
   },
