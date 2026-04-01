@@ -29,6 +29,7 @@ const colors = {
   sidebar: "#3d4548",
   sidebarActive: "#4caf50",
   greenLabel: "#3a8fa3",
+  link: "#298BAB",
   error: "#ea1d35",
   warn: "#fffbe6",
   warnBorder: "#eed86a",
@@ -328,7 +329,7 @@ function NoResultsMessage() {
     <div style={s.noResults}>
       <strong style={{ color: "#555" }}>No matching addresses found.</strong>
       <br />
-      <span style={{ color: colors.teal, textDecoration: "underline", cursor: "pointer" }}>Enter the address manually</span>
+      <span style={{ color: colors.link, textDecoration: "underline", cursor: "pointer" }}>Enter the address manually</span>
     </div>
   );
 }
@@ -338,7 +339,7 @@ function POBoxWarning() {
     <div style={s.noResults}>
       <strong style={{ color: "#333" }}>PO Boxes aren't supported.</strong>
       <br />
-      Please enter a street address instead, or <span style={{ color: colors.teal, textDecoration: "underline", cursor: "pointer" }}>enter the address manually</span>.
+      Please enter a street address instead, or <span style={{ color: colors.link, textDecoration: "underline", cursor: "pointer" }}>enter the address manually</span>.
     </div>
   );
 }

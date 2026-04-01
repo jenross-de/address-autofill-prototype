@@ -27,6 +27,7 @@ const colors = {
   grayBg: "#efefef",
   sidebar: "#3d4548",
   greenLabel: "#3a8fa3",
+  link: "#298BAB",
   error: "#ea1d35",
 };
 
@@ -102,7 +103,7 @@ const s = {
     boxShadow: flash ? "0 0 0 4px rgba(58,143,163,0.3)" : "none",
   }),
   manualLink: {
-    color: colors.teal,
+    color: colors.link,
     cursor: "pointer",
     textDecoration: "underline",
     fontWeight: 500,
