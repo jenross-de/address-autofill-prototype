@@ -764,7 +764,7 @@ const STEP_LABELS = {
   //       "User types a street address manually. Search available above to retry.",
   //     ],
   //   },
-  // };
+};
 
 // ─── Main App ───
 export default function App() {
