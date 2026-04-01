@@ -18,7 +18,8 @@ Use these values for all new UI in this feature. They are matched to existing Bl
 | `greenLight` | `#eaf6ea` | Autofill field background, dropdown hover background |
 | `greenDark` | `#2d7a30` | Autofill field text |
 | `teal` | `#3a8fa3` | Replace button background only |
-| `link` | `#298BAB` | All inline text links |
+| `link` | `#298BAB` | All inline text links (no underline; color darkens on hover) |
+| `linkHover` | `#1f6d87` | Link hover state |
 | `inputText` | `#202020` | Input field text |
 | `placeholder` | `#aaa` | Placeholder text |
 | `labelColor` | `#999` | Field label text |
@@ -183,7 +184,7 @@ On mobile devices, the soft keyboard reduces the visible viewport when the searc
 2. Resets search state to idle (closes the error message)
 3. After ~50ms (allow state update), shifts focus to the Address `<textarea>`
 
-**Styling:** Same container as no-results (`#fafafa` background, `1px solid #e0e0e0` border). Link is `color: #298BAB`, `text-decoration: underline`, `fontWeight: 500`.
+**Styling:** Same container as no-results (`#fafafa` background, `1px solid #e0e0e0` border). Link is `color: #298BAB`, `text-decoration: none`, `fontWeight: 500`. Color darkens to `#1f6d87` on hover.
 
 ### Acceptance criteria
 
@@ -205,7 +206,7 @@ On mobile devices, the soft keyboard reduces the visible viewport when the searc
 
 **Link behavior:** Identical to PO Box manual link — clears search, resets state, focuses Address textarea.
 
-**Styling:** Same container as PO Box error (`#fafafa` background, `1px solid #e0e0e0` border). Link is `color: #298BAB`, `text-decoration: underline`, `fontWeight: 500`.
+**Styling:** Same container as PO Box error (`#fafafa` background, `1px solid #e0e0e0` border). Link is `color: #298BAB`, `text-decoration: none`, `fontWeight: 500`. Color darkens to `#1f6d87` on hover.
 
 ### Acceptance criteria
 

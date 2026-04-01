@@ -31,6 +31,7 @@ const colors = {
   sidebarActive: "#4caf50",
   greenLabel: "#4caf50",
   link: "#298BAB",
+  linkHover: "#1f6d87",
   error: "#ea1d35",
   warn: "#fffbe6",
   warnBorder: "#eed86a",
@@ -330,7 +331,7 @@ function NoResultsMessage() {
     <div style={s.noResults}>
       <strong style={{ color: "#555" }}>No matching addresses found.</strong>
       <br />
-      <span style={{ color: colors.link, textDecoration: "underline", cursor: "pointer" }}>Enter the address manually</span>
+      <span style={{ color: colors.link, cursor: "pointer" }} onMouseEnter={e => e.target.style.color = colors.linkHover} onMouseLeave={e => e.target.style.color = colors.link}>Enter the address manually</span>
     </div>
   );
 }
@@ -340,7 +341,7 @@ function POBoxWarning() {
     <div style={s.noResults}>
       <strong style={{ color: "#333" }}>PO Boxes aren't supported.</strong>
       <br />
-      Please enter a street address instead, or <span style={{ color: colors.link, textDecoration: "underline", cursor: "pointer" }}>enter the address manually</span>.
+      Please enter a street address instead, or <span style={{ color: colors.link, cursor: "pointer" }} onMouseEnter={e => e.target.style.color = colors.linkHover} onMouseLeave={e => e.target.style.color = colors.link}>enter the address manually</span>.
     </div>
   );
 }

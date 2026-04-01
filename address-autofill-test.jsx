@@ -30,6 +30,7 @@ const colors = {
   sidebar: "#3d4548",
   greenLabel: "#4caf50",
   link: "#298BAB",
+  linkHover: "#1f6d87",
   error: "#ea1d35",
 };
 
@@ -107,7 +108,7 @@ const s = {
   manualLink: {
     color: colors.link,
     cursor: "pointer",
-    textDecoration: "underline",
+    textDecoration: "none",
     fontWeight: 500,
     background: "none",
     border: "none",
@@ -305,7 +306,7 @@ export default function App() {
                     <div style={s.noResults}>
                       <strong style={{ color: "#333" }}>No matching addresses found.</strong>
                       <br />
-                      <button onClick={handleEnterManually} style={s.manualLink}>
+                      <button onClick={handleEnterManually} style={s.manualLink} onMouseEnter={e => e.target.style.color = colors.linkHover} onMouseLeave={e => e.target.style.color = colors.link}>
                         Enter the address manually
                       </button>
                     </div>
@@ -317,7 +318,7 @@ export default function App() {
                       <strong style={{ color: "#333" }}>PO Boxes aren't supported.</strong>
                       <br />
                       Please enter a street address instead, or{" "}
-                      <button onClick={handleEnterManually} style={s.manualLink}>
+                      <button onClick={handleEnterManually} style={s.manualLink} onMouseEnter={e => e.target.style.color = colors.linkHover} onMouseLeave={e => e.target.style.color = colors.link}>
                         enter the address manually
                       </button>.
                     </div>
