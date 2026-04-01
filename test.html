@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Address Update — User Test</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 0; box-sizing: border-box; background: #efefef; font-family: 'Prompt', sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    fetch('./address-autofill-test.jsx')
+      .then(r => r.text())
+      .then(code => {
+        const stripped = code
+          .replace(/^import\s+.*?from\s+['"].*?['"];?\n?/gm, '')
+          .replace(/^export default\s+/m, '');
+
+        const fullCode =
+          'const { useState, useEffect, useRef, useCallback } = React;\n' +
+          stripped +
+          '\nReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));';
+
+        const transformed = Babel.transform(fullCode, { presets: ['react'] }).code;
+        eval(transformed);
+      })
+      .catch(err => {
+        document.getElementById('root').textContent = 'Failed to load: ' + err.message;
+      });
+  </script>
+</body>
+</html>
