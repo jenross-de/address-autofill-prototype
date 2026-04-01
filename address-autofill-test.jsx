@@ -1,16 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 
+// Mock data matching Smarty US Autocomplete Pro API response format
+// Fields: street_line, secondary, city, state, zipcode, entries
 const MOCK_RESULTS = [
-  { line1: "135 N Pennsylvania St", city: "Indianapolis", state: "IN", zip: "46204" },
-  { line1: "135 N Pennsylvania Ave", city: "Lansing", state: "MI", zip: "48912" },
-  { line1: "135 N Penn St", city: "York", state: "PA", zip: "17401" },
+  { street_line: "135 N Pennsylvania St", secondary: "", city: "Indianapolis", state: "IN", zipcode: "46204", entries: 0 },
+  { street_line: "135 N Pennsylvania Ave", secondary: "", city: "Lansing", state: "MI", zipcode: "48912", entries: 0 },
+  { street_line: "135 N Penn St", secondary: "Apt", city: "York", state: "PA", zipcode: "17401", entries: 4 },
 ];
 
 const EXISTING_ADDRESS = {
-  line1: "42 Wallaby Way",
+  street_line: "42 Wallaby Way",
+  secondary: "",
   city: "Indpls",
   state: "IN",
-  zip: "46201",
+  zipcode: "46201",
 };
 
 const colors = {
@@ -46,40 +49,38 @@ const s = {
   field: { marginBottom: 14 },
   label: { fontSize: 12, fontWeight: 500, color: colors.grayMed, marginBottom: 4, display: "block" },
   labelGreen: { fontSize: 12, fontWeight: 500, color: colors.greenLabel, marginBottom: 4, display: "block" },
-  input: (variant) => ({
+  input: {
     width: "100%",
     height: 36,
-    border: `1px solid ${variant === "focus" ? colors.teal : colors.gray}`,
+    border: "1px solid #d0d0d0",
     borderRadius: 3,
     padding: "0 10px",
     fontSize: 13,
-    color: colors.grayDark,
+    color: "#333",
     background: "white",
     boxSizing: "border-box",
     fontFamily: "'Prompt', sans-serif",
-    display: "flex",
-    alignItems: "center",
-    boxShadow: variant === "focus" ? "0 0 0 2px rgba(74,155,142,0.15)" : "none",
-  }),
-  inputTall: (variant) => ({
+    outline: "none",
+  },
+  inputTall: {
     width: "100%",
     height: 72,
-    border: `1px solid ${variant === "focus" ? colors.teal : colors.gray}`,
+    border: "1px solid #d0d0d0",
     borderRadius: 3,
     padding: "8px 10px",
     fontSize: 13,
-    color: colors.grayDark,
+    color: "#333",
     background: "white",
     boxSizing: "border-box",
     fontFamily: "'Prompt', sans-serif",
-    alignItems: "flex-start",
-    display: "flex",
-  }),
-  select: { width: "100%", height: 36, border: `1px solid ${colors.gray}`, borderRadius: 3, padding: "0 28px 0 10px", fontSize: 13, color: colors.grayDark, background: `white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E") no-repeat right 10px center`, boxSizing: "border-box", fontFamily: "'Prompt', sans-serif" },
+    outline: "none",
+    resize: "none",
+  },
+  select: { width: "100%", height: 36, border: "1px solid " + colors.gray, borderRadius: 3, padding: "0 28px 0 10px", fontSize: 13, color: colors.grayDark, background: "white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E\") no-repeat right 10px center", boxSizing: "border-box", fontFamily: "'Prompt', sans-serif" },
   searchWrap: { marginBottom: 10 },
   searchLabel: { fontSize: 12, fontWeight: 500, color: colors.grayMed, marginBottom: 4, display: "block" },
-  searchInput: (active) => ({ width: "100%", height: 36, border: `1px solid ${active ? colors.teal : colors.gray}`, borderRadius: 3, padding: "0 10px 0 32px", fontSize: 13, color: active ? colors.grayDark : colors.grayLight, background: "white", boxSizing: "border-box", fontFamily: "'Prompt', sans-serif", outline: "none", boxShadow: active ? "0 0 0 2px rgba(74,155,142,0.15)" : "none" }),
-  dropdown: { position: "absolute", width: "100%", zIndex: 10, background: "white", border: `1px solid ${colors.gray}`, borderTop: "none", boxShadow: "0 3px 10px rgba(0,0,0,0.08)", overflow: "hidden" },
+  searchInput: (active) => ({ width: "100%", height: 36, border: "1px solid " + (active ? colors.teal : colors.gray), borderRadius: 3, padding: "0 10px 0 32px", fontSize: 13, color: active ? colors.grayDark : colors.grayLight, background: "white", boxSizing: "border-box", fontFamily: "'Prompt', sans-serif", outline: "none", boxShadow: active ? "0 0 0 2px rgba(74,155,142,0.15)" : "none" }),
+  dropdown: { position: "absolute", width: "100%", zIndex: 10, background: "white", border: "1px solid " + colors.gray, borderTop: "none", boxShadow: "0 3px 10px rgba(0,0,0,0.08)", overflow: "hidden" },
   dropdownItem: (hover) => ({ padding: "8px 10px", fontSize: 12, color: colors.grayDark, borderBottom: "1px solid #f2f2f2", cursor: "pointer", background: hover ? colors.tealLight : "white" }),
   confirm: { background: "#fafafa", border: "1px solid #e0e0e0", borderRadius: 3, padding: "10px 12px", marginTop: 6, fontSize: 12, color: "#555", lineHeight: 1.5 },
   confirmBtns: { display: "flex", gap: 6, marginTop: 8 },
@@ -87,7 +88,29 @@ const s = {
   row: { display: "flex", gap: 12 },
   checkRow: { display: "flex", gap: 24, marginTop: 4 },
   checkItem: { display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "#999" },
-  checkBox: (checked) => ({ width: 16, height: 16, border: "1px solid #ccc", borderRadius: 2, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: colors.teal, background: checked ? colors.tealLight : "white" }),
+  checkBox: (checked, flash) => ({
+    width: 16, height: 16,
+    border: "1px solid #ccc",
+    borderRadius: 2,
+    display: "flex", alignItems: "center", justifyContent: "center",
+    fontSize: 11,
+    color: colors.teal,
+    background: flash ? "#b8f0d0" : (checked ? colors.tealLight : "white"),
+    cursor: "pointer",
+    transition: "background 0.4s ease, box-shadow 0.4s ease",
+    boxShadow: flash ? "0 0 0 4px rgba(58,143,163,0.3)" : "none",
+  }),
+  manualLink: {
+    color: colors.teal,
+    cursor: "pointer",
+    textDecoration: "underline",
+    fontWeight: 500,
+    background: "none",
+    border: "none",
+    padding: 0,
+    fontSize: 12,
+    fontFamily: "'Prompt', sans-serif",
+  },
 };
 
 function SearchIcon({ active }) {
@@ -124,15 +147,21 @@ function SidebarNav() {
 
 // ─── Main Test App ───
 export default function App() {
-  // search: 'idle' | 'typing' | 'confirming' | 'replaced' | 'noResults' | 'poBox'
   const [searchState, setSearchState] = useState("idle");
   const [searchValue, setSearchValue] = useState("");
   const [selectedResult, setSelectedResult] = useState(null);
-  const [hoveredResult, setHoveredResult] = useState(0);
+  const [hoveredResult, setHoveredResult] = useState(-1);
   const inputRef = useRef(null);
+  const addressRef = useRef(null);
 
-  const address = searchState === "replaced" && selectedResult ? selectedResult : EXISTING_ADDRESS;
-  const badAddress = searchState !== "replaced";
+  // Editable address fields
+  const [fields, setFields] = useState({ ...EXISTING_ADDRESS });
+  const [badAddress, setBadAddress] = useState(true);
+  const [badAddressFlash, setBadAddressFlash] = useState(false);
+
+  function updateField(key, value) {
+    setFields((prev) => ({ ...prev, [key]: value }));
+  }
 
   function handleSearchChange(e) {
     const val = e.target.value;
@@ -152,14 +181,39 @@ export default function App() {
   }
 
   function handleReplace() {
+    if (selectedResult) {
+      setFields({
+        street_line: selectedResult.street_line,
+        secondary: selectedResult.secondary || "",
+        city: selectedResult.city,
+        state: selectedResult.state,
+        zipcode: selectedResult.zipcode,
+      });
+    }
     setSearchState("replaced");
     setSearchValue("");
+
+    // Flash Bad Address checkbox when auto-clearing
+    if (badAddress) {
+      setBadAddress(false);
+      setBadAddressFlash(true);
+      setTimeout(() => setBadAddressFlash(false), 1500);
+    }
   }
 
   function handleCancelConfirm() {
     setSearchState("idle");
     setSearchValue("");
     setSelectedResult(null);
+  }
+
+  function handleEnterManually() {
+    setSearchState("idle");
+    setSearchValue("");
+    setSelectedResult(null);
+    setTimeout(() => {
+      if (addressRef.current) addressRef.current.focus();
+    }, 50);
   }
 
   const showDropdown = searchState === "typing";
@@ -214,6 +268,8 @@ export default function App() {
                     onChange={handleSearchChange}
                     style={s.searchInput(searchActive)}
                   />
+
+                  {/* Dropdown — Smarty US Autocomplete Pro format with city/state emphasis */}
                   {showDropdown && (
                     <div style={s.dropdown}>
                       {MOCK_RESULTS.map((r, i) => (
@@ -224,29 +280,53 @@ export default function App() {
                           onMouseLeave={() => setHoveredResult(-1)}
                           onClick={() => handleSelectResult(r)}
                         >
-                          <strong>{r.line1}</strong>, {r.city}, {r.state} {r.zip}
+                          <span>
+                            {r.street_line}
+                            {r.secondary ? " " + r.secondary : ""}
+                            {r.entries > 0 && (
+                              <span style={{ fontSize: 11, color: colors.grayMed }}>{" "}({r.entries} entries)</span>
+                            )}
+                            <span style={{ fontWeight: 600, color: colors.grayDark }}>
+                              {" "}&mdash; {r.city}, {r.state}
+                            </span>
+                            <span style={{ color: colors.grayMed }}> {r.zipcode}</span>
+                          </span>
                         </div>
                       ))}
                     </div>
                   )}
+
+                  {/* No results — with "Enter manually" link */}
                   {showNoResults && (
                     <div style={s.noResults}>
                       <strong style={{ color: "#333" }}>No matching addresses found.</strong>
                       <br />
-                      Enter the address manually in the fields below.
+                      <button onClick={handleEnterManually} style={s.manualLink}>
+                        Enter the address manually
+                      </button>
                     </div>
                   )}
+
+                  {/* PO Box error — plain language + "enter manually" link */}
                   {showPoBox && (
                     <div style={s.noResults}>
                       <strong style={{ color: "#333" }}>PO Boxes aren't supported.</strong>
                       <br />
-                      Please enter a deliverable street address instead.
+                      Please enter a street address instead, or{" "}
+                      <button onClick={handleEnterManually} style={s.manualLink}>
+                        enter the address manually
+                      </button>.
                     </div>
                   )}
                 </div>
+
+                {/* Confirm — updated scope language */}
                 {showConfirm && selectedResult && (
                   <div style={s.confirm}>
-                    Replace current address with <strong style={{ color: colors.grayDark }}>{selectedResult.line1}, {selectedResult.city}, {selectedResult.state} {selectedResult.zip}</strong>?
+                    Replace all address fields with{" "}
+                    <strong style={{ color: colors.grayDark }}>
+                      {selectedResult.street_line}, {selectedResult.city}, {selectedResult.state} {selectedResult.zipcode}
+                    </strong>?
                     <div style={s.confirmBtns}>
                       <button onClick={handleReplace} style={{ ...s.btnSave, fontSize: 12, padding: "5px 14px" }}>Replace</button>
                       <button onClick={handleCancelConfirm} style={{ ...s.btnCancel, fontSize: 12, padding: "5px 14px", marginRight: 0 }}>Cancel</button>
@@ -255,22 +335,49 @@ export default function App() {
                 )}
               </div>
 
-              {/* Address fields */}
+              {/* Helper text — search discoverability nudge */}
+              {searchState === "idle" && (
+                <div style={{ fontSize: 11, color: colors.grayLight, marginBottom: 10, fontStyle: "italic" }}>
+                  Type an address above to auto-fill the fields below
+                </div>
+              )}
+
+              {/* Address fields — now editable inputs */}
               <div style={s.field}>
                 <label style={s.label}>Address</label>
-                <div style={s.inputTall()}>{address.line1}</div>
+                <textarea
+                  ref={addressRef}
+                  value={fields.street_line}
+                  onChange={(e) => updateField("street_line", e.target.value)}
+                  style={s.inputTall}
+                />
               </div>
               <div style={s.field}>
                 <label style={s.label}>City</label>
-                <div style={s.input()}>{address.city}</div>
+                <input
+                  type="text"
+                  value={fields.city}
+                  onChange={(e) => updateField("city", e.target.value)}
+                  style={s.input}
+                />
               </div>
               <div style={{ ...s.field, maxWidth: 200 }}>
                 <label style={s.label}>State</label>
-                <div style={s.select}>{address.state}</div>
+                <input
+                  type="text"
+                  value={fields.state}
+                  onChange={(e) => updateField("state", e.target.value)}
+                  style={s.input}
+                />
               </div>
               <div style={{ ...s.field, maxWidth: 160 }}>
                 <label style={s.label}>ZIP Code</label>
-                <div style={s.input()}>{address.zip}</div>
+                <input
+                  type="text"
+                  value={fields.zipcode}
+                  onChange={(e) => updateField("zipcode", e.target.value)}
+                  style={s.input}
+                />
               </div>
               <div style={s.field}>
                 <label style={s.labelGreen}>Type</label>
@@ -280,10 +387,26 @@ export default function App() {
               {/* Checkboxes */}
               <div style={s.checkRow}>
                 <div style={s.checkItem}>
-                  <div style={s.checkBox(true)}>✓</div> Primary?
+                  <div style={s.checkBox(true, false)}>✓</div> Primary?
                 </div>
                 <div style={s.checkItem}>
-                  <div style={s.checkBox(badAddress)}>{badAddress ? "✓" : ""}</div> Bad Address?
+                  <div
+                    style={s.checkBox(badAddress, badAddressFlash)}
+                    onClick={() => setBadAddress(!badAddress)}
+                  >
+                    {badAddress ? "✓" : ""}
+                  </div>
+                  {" "}Bad Address?
+                  {badAddressFlash && (
+                    <span style={{
+                      fontSize: 10,
+                      color: colors.teal,
+                      fontWeight: 500,
+                      marginLeft: 4,
+                    }}>
+                      Cleared
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

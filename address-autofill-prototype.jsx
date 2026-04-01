@@ -99,7 +99,7 @@ const s = {
   input: (variant) => ({
     width: "100%",
     height: 36,
-    border: `1px solid ${variant === "autofill" ? colors.teal : variant === "focus" ? colors.teal : variant === "error" ? colors.error : colors.gray}`,
+    border: `1px solid ${variant === "autofill" ? colors.teal : variant === "focus" ? colors.sidebarActive : variant === "error" ? colors.error : colors.gray}`,
     padding: "0 10px",
     fontSize: 13,
     color: variant === "autofill" ? colors.tealDark : variant === "placeholder" ? colors.grayLight : variant === "dim" ? colors.grayLight : colors.grayDark,
@@ -111,7 +111,7 @@ const s = {
     alignItems: "center",
     transition: "all 0.2s",
     opacity: variant === "dim" ? 0.45 : 1,
-    boxShadow: variant === "focus" ? `0 0 0 2px rgba(74,155,142,0.15)` : "none",
+    boxShadow: "none",
   }),
   select: (variant) => ({
     width: "100%",
