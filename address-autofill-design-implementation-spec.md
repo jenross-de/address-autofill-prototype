@@ -135,12 +135,17 @@ Each suggestion contains: `street_line`, `secondary`, `city`, `state`, `zipcode`
 
 When a result has `entries > 0`, clicking it should drill down to show secondary address options (Apt 1, Apt 2, etc.) per Smarty's recommended UX pattern. The badge alone is not self-explanatory — the drill-down is essential.
 
+**Mobile — virtual keyboard and dropdown visibility:**
+
+On mobile devices, the soft keyboard reduces the visible viewport when the search field is focused. Ensure the dropdown scrolls into view and is not obscured by the keyboard. The dropdown should remain accessible without requiring the user to dismiss the keyboard first.
+
 ### Acceptance criteria
 
 - [ ] Dropdown appears when user types 1+ characters (non-PO-Box)
 - [ ] Results render in Smarty format with bold city/state
 - [ ] Clicking a result transitions to confirmation
 - [ ] Results with `entries > 0` show the count badge and trigger drill-down
+- [ ] Dropdown is visible and scrollable when soft keyboard is open on mobile
 
 ---
 
