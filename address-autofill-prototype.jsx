@@ -22,7 +22,7 @@ const colors = {
   tealDark: "#2a7a8e",
   gray: "#d0d0d0",
   grayDark: "#333",
-  grayMed: "#888",
+  grayMed: "#999",
   grayLight: "#bbb",
   grayBg: "#efefef",
   sidebar: "#3d4548",
@@ -94,8 +94,8 @@ const s = {
   btnCancel: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "1px solid #ccc", background: "white", color: "#555", cursor: "pointer", marginRight: 6, fontFamily: "'Prompt', sans-serif" },
   btnSave: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "none", background: colors.teal, color: "white", cursor: "pointer", fontFamily: "'Prompt', sans-serif" },
   field: { marginBottom: 14 },
-  label: { fontSize: 12, fontWeight: 500, color: colors.grayMed, marginBottom: 4, display: "block" },
-  labelGreen: { fontSize: 12, color: colors.greenLabel, marginBottom: 4, display: "block" },
+  label: { fontSize: 14, fontWeight: 500, color: colors.grayMed, marginBottom: 4, display: "block" },
+  labelGreen: { fontSize: 14, color: colors.greenLabel, marginBottom: 4, display: "block" },
   input: (variant) => ({
     width: "100%",
     height: 36,
@@ -131,7 +131,7 @@ const s = {
   }),
   row: { display: "flex", gap: 12 },
   searchWrap: { marginBottom: 10 },
-  searchLabel: { fontSize: 12, color: colors.grayMed, marginBottom: 4, display: "block" },
+  searchLabel: { fontSize: 14, color: colors.grayMed, marginBottom: 4, display: "block" },
   searchInput: (active) => ({
     width: "100%",
     height: 34,
