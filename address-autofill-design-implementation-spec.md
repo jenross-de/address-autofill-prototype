@@ -44,6 +44,10 @@ Use these values for all new UI in this feature. They are matched to existing Bl
 
 `'Prompt', sans-serif` — applied to all form elements, buttons, labels, and inputs in this feature.
 
+### When in doubt
+
+If a situation isn't explicitly covered by this spec, use the existing Bloomerang component and style defaults. Do not introduce new patterns, colors, or spacing that aren't already present in the product or documented here.
+
 ---
 
 ## Feature summary
