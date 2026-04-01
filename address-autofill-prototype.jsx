@@ -852,11 +852,8 @@ export default function App() {
           <div style={s.body}>
             <div style={s.main}>
               <CRMHeader />
-              {option === "A" ? (
-                <OptionAForm flow={flow} step={step} />
-              // ) : (
-              //   <OptionBForm flow={flow} step={step} />
-              // )}
+              <OptionAForm flow={flow} step={step} />
+              {/* Option B removed: <OptionBForm flow={flow} step={step} /> */}
             </div>
             <div style={s.rightPanel}>
               <div style={{ border: "1px solid #e0e0e0", borderRadius: 2 }}>
