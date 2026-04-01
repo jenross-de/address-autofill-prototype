@@ -473,13 +473,13 @@ function OptionAForm({ flow, step }) {
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>PO Box 1234 Zionsville</span>
+                <span style={{ marginLeft: 22 }}>2891 Elm St Springfield</span>
               </div>
-              <POBoxWarning />
+              <NoResultsMessage />
             </div>
           </div>
-          <Field label="Address" value="PO Box 1234" variant="focus" />
-          <Field label="City" value="Zionsville" />
+          <Field label="Address" value="" variant="placeholder" />
+          <Field label="City" value="" variant="placeholder" />
           <SelectField label="State" value="" variant="placeholder" />
           <Field label="ZIP Code" value="" variant="placeholder" />
           <SelectField label="Type" value="Home" green />
@@ -492,7 +492,44 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value="PO Box 1234" variant="focus" />
+          <Field label="Address" value="2891 Elm St" variant="focus" />
+          <Field label="City" value="Springfield" />
+          <SelectField label="State" value="" variant="placeholder" />
+          <Field label="ZIP Code" value="" variant="placeholder" />
+          <SelectField label="Type" value="Home" green />
+          <Checks />
+        </>
+      );
+    }
+    if (step === 2) {
+      return (
+        <>
+          <SelectField label="Country" value="United States" />
+          <div style={{ ...s.searchWrap, borderBottom: "none", paddingBottom: 0, marginBottom: 6 }}>
+            <div style={s.searchLabel}>Search for an Address</div>
+            <div style={{ position: "relative" }}>
+              <div style={s.searchInput(true)}>
+                <SearchIcon />
+                <span style={{ marginLeft: 22 }}>PO Box 1234 Zionsville</span>
+              </div>
+              <POBoxWarning />
+            </div>
+          </div>
+          <Field label="Address" value="" variant="placeholder" />
+          <Field label="City" value="" variant="placeholder" />
+          <SelectField label="State" value="" variant="placeholder" />
+          <Field label="ZIP Code" value="" variant="placeholder" />
+          <SelectField label="Type" value="Home" green />
+          <Checks />
+        </>
+      );
+    }
+    if (step === 3) {
+      return (
+        <>
+          <SelectField label="Country" value="United States" />
+          <SearchField idle />
+          <Field label="Address" value="618 N Elm St" variant="focus" />
           <Field label="City" value="Zionsville" />
           <SelectField label="State" value="IN" />
           <Field label="ZIP Code" value="46077" />
@@ -630,14 +667,11 @@ function OptionBForm({ flow, step }) {
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>PO Box 1234 Zionsville</span>
+                <span style={{ marginLeft: 22 }}>2891 Elm St Springfield</span>
               </div>
-              <POBoxWarning />
+              <NoResultsMessage />
             </div>
           </div>
-          <Field label="City" value="Zionsville" />
-          <SelectField label="State" value="" variant="placeholder" />
-          <Field label="ZIP Code" value="" variant="placeholder" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -647,8 +681,39 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
-          <SearchField idle />
-          <Field label="Address" value="PO Box 1234" variant="focus" />
+          <Field label="Address" value="2891 Elm St" variant="focus" />
+          <Field label="City" value="Springfield" />
+          <SelectField label="State" value="" variant="placeholder" />
+          <Field label="ZIP Code" value="" variant="placeholder" />
+          <SelectField label="Type" value="Home" green />
+          <Checks />
+        </>
+      );
+    }
+    if (step === 2) {
+      return (
+        <>
+          <SelectField label="Country" value="United States" />
+          <div style={{ marginBottom: 10 }}>
+            <label style={s.label}>Address</label>
+            <div style={{ position: "relative" }}>
+              <div style={s.searchInput(true)}>
+                <SearchIcon />
+                <span style={{ marginLeft: 22 }}>PO Box 1234 Zionsville</span>
+              </div>
+              <POBoxWarning />
+            </div>
+          </div>
+          <SelectField label="Type" value="Home" green />
+          <Checks />
+        </>
+      );
+    }
+    if (step === 3) {
+      return (
+        <>
+          <SelectField label="Country" value="United States" />
+          <Field label="Address" value="618 N Elm St" variant="focus" />
           <Field label="City" value="Zionsville" />
           <SelectField label="State" value="IN" />
           <Field label="ZIP Code" value="46077" />
@@ -676,8 +741,10 @@ const STEP_LABELS = {
       "After Replace: all address fields updated with the validated address.",
     ],
     noResults: [
-      "User types 'PO Box...' — warning appears immediately. Address and City are parsed from the typed text and pre-filled.",
-      "User corrects address manually. Search remains available to retry.",
+      "User searches a real address — no results found. Message prompts manual entry.",
+      "User fills in fields manually. Search remains available to retry.",
+      "User types 'PO Box...' — warning appears. Fields below remain empty.",
+      "User types a street address manually. Search remains available to retry.",
     ],
   },
   B: {
@@ -692,8 +759,10 @@ const STEP_LABELS = {
       "After Replace: fields updated with validated address.",
     ],
     noResults: [
-      "User types 'PO Box...' — warning appears immediately. City is parsed from the typed text and pre-filled.",
-      "User corrects address manually. Search available above to retry.",
+      "User searches a real address — no results found. Message prompts manual entry.",
+      "User fills in fields manually. Search available above to retry.",
+      "User types 'PO Box...' — warning appears. Fields below remain empty.",
+      "User types a street address manually. Search available above to retry.",
     ],
   },
 };
