@@ -297,10 +297,42 @@ V2 testing surfaced a Major issue: with editable fields, some users (mainly Volu
 
 ---
 
+## Component: Post-Replace Field Flash
+
+**Trigger:** User clicks Replace and address fields are updated.
+
+**Purpose:** Briefly draw attention to the fields that changed so the user can confirm the replacement occurred. This is especially important since the confirmation card disappears at the same moment the fields update.
+
+**Which fields flash:** Address, City, State, and ZIP Code — the four fields updated by Replace.
+
+**Sequence:**
+
+1. On Replace, apply flash background to all four fields simultaneously
+2. Hold briefly, then fade back to normal white background
+3. Fields settle to their default styling — no persistent autofill highlight after the flash completes
+
+**Styling:**
+
+- Flash: `background: #eaf6ea`
+- Transition out: `background 0.8s ease`
+- Total duration: ~800ms
+
+**Note:** This is a green variant of the classic Yellow Fade Technique. The 0.8s duration is intentionally shorter than the Bad Address checkbox flash (1500ms) — it is a directional signal ("look here"), not a persistent status indicator.
+
+**Relationship to autofill state:** The flash is transient. Fields return to normal white background after the animation — they do not retain a persistent green border or background. The field values themselves are the confirmation that replacement occurred.
+
+### Acceptance criteria
+
+- [ ] All four address fields flash simultaneously on Replace
+- [ ] Flash is noticeable but brief (~800ms total)
+- [ ] Fields return to normal default styling after flash completes
+- [ ] Flash does not occur when fields are edited manually (only on Replace)
+
+---
+
 ## Out of scope
 
 - Search text pre-fill on fallback — when "enter manually" is clicked, copying the search query into the Address field. Identified in V2 testing (7/100 personas expected it). Deferred to a future iteration to simplify initial scope.
-- Post-replace field flash (green highlight on updated fields) — noted separately for dev implementation
 - Type field label color consistency — existing required-field pattern, separate initiative
 
 ---
