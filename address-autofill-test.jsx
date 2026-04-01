@@ -23,7 +23,7 @@ const colors = {
   grayDark: "#333",
   inputText: "#202020",
   grayMed: "#999",
-  grayLight: "#bbb",
+  grayLight: "#aaa",
   grayBg: "#efefef",
   sidebar: "#3d4548",
   greenLabel: "#3a8fa3",
