@@ -61,7 +61,7 @@ const s = {
     cursor: "pointer",
     transition: "all 0.15s",
   }),
-  stepBar: { display: "flex", gap: 6, marginBottom: 16 },
+  stepBar: { display: "flex", gap: 6 },
   stepBtn: (active, available) => ({
     width: 28,
     height: 28,
@@ -235,13 +235,13 @@ function CRMHeader() {
   );
 }
 
-function Field({ label, value, variant = "default", green, hint, style: extraStyle }) {
+function Field({ label, value, variant = "default", green, hint, tall, style: extraStyle }) {
   return (
     <div style={{ ...s.field, ...extraStyle }}>
       <label style={green ? s.labelGreen : s.label}>
         {label} {hint && <span style={{ color: colors.grayLight, fontWeight: 400 }}>{hint}</span>}
       </label>
-      <div style={s.input(variant)}>
+      <div style={{ ...s.input(variant), ...(tall ? { height: 72, alignItems: "flex-start", paddingTop: 8 } : {}) }}>
         {value}
       </div>
     </div>
@@ -358,7 +358,7 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value="" variant="placeholder" />
+          <Field label="Address" tall value="" variant="placeholder" />
           <Field label="City" value="" variant="placeholder" />
           <SelectField label="State" value="" variant="placeholder" />
           <Field label="ZIP Code" value="" variant="placeholder" />
@@ -381,7 +381,7 @@ function OptionAForm({ flow, step }) {
               <DropdownResults results={MOCK_RESULTS} onSelect={() => {}} />
             </div>
           </div>
-          <Field label="Address" value="" variant="placeholder" />
+          <Field label="Address" tall value="" variant="placeholder" />
           <Field label="City" value="" variant="placeholder" />
           <SelectField label="State" value="" variant="placeholder" />
           <Field label="ZIP Code" value="" variant="placeholder" />
@@ -395,10 +395,10 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
-          <Field label="City" value="Indianapolis" variant="autofill" />
-          <SelectField label="State" value="IN" variant="autofill" />
-          <Field label="ZIP Code" value="46204" variant="autofill" />
+          <Field label="Address" tall value="135 N Pennsylvania St" />
+          <Field label="City" value="Indianapolis" />
+          <SelectField label="State" value="IN" />
+          <Field label="ZIP Code" value="46204" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -412,7 +412,7 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value={EXISTING_ADDRESS.line1} />
+          <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
@@ -439,7 +439,7 @@ function OptionAForm({ flow, step }) {
               onCancel={() => {}}
             />
           </div>
-          <Field label="Address" value={EXISTING_ADDRESS.line1} />
+          <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
@@ -453,10 +453,10 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
-          <Field label="City" value="Indianapolis" variant="autofill" />
-          <SelectField label="State" value="IN" variant="autofill" />
-          <Field label="ZIP Code" value="46204" variant="autofill" />
+          <Field label="Address" tall value="135 N Pennsylvania St" />
+          <Field label="City" value="Indianapolis" />
+          <SelectField label="State" value="IN" />
+          <Field label="ZIP Code" value="46204" />
           <SelectField label="Type" value="Home" green />
           <Checks primaryChecked />
         </>
@@ -479,7 +479,7 @@ function OptionAForm({ flow, step }) {
               <NoResultsMessage />
             </div>
           </div>
-          <Field label="Address" value="" variant="placeholder" />
+          <Field label="Address" tall value="" variant="placeholder" />
           <Field label="City" value="" variant="placeholder" />
           <SelectField label="State" value="" variant="placeholder" />
           <Field label="ZIP Code" value="" variant="placeholder" />
@@ -493,7 +493,7 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value="2891 Elm St" variant="focus" />
+          <Field label="Address" tall value="2891 Elm St" variant="focus" />
           <Field label="City" value="Springfield" />
           <SelectField label="State" value="" variant="placeholder" />
           <Field label="ZIP Code" value="" variant="placeholder" />
@@ -516,7 +516,7 @@ function OptionAForm({ flow, step }) {
               <POBoxWarning />
             </div>
           </div>
-          <Field label="Address" value="" variant="placeholder" />
+          <Field label="Address" tall value="" variant="placeholder" />
           <Field label="City" value="" variant="placeholder" />
           <SelectField label="State" value="" variant="placeholder" />
           <Field label="ZIP Code" value="" variant="placeholder" />
@@ -530,7 +530,7 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value="618 N Elm St" variant="focus" />
+          <Field label="Address" tall value="618 N Elm St" variant="focus" />
           <Field label="City" value="Zionsville" />
           <SelectField label="State" value="IN" />
           <Field label="ZIP Code" value="46077" />
@@ -589,10 +589,10 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
-          <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
-          <Field label="City" value="Indianapolis" variant="autofill" />
-          <SelectField label="State" value="IN" variant="autofill" />
-          <Field label="ZIP Code" value="46204" variant="autofill" />
+          <Field label="Address" tall value="135 N Pennsylvania St" />
+          <Field label="City" value="Indianapolis" />
+          <SelectField label="State" value="IN" />
+          <Field label="ZIP Code" value="46204" />
           <SelectField label="Type" value="Home" green />
           <Checks />
         </>
@@ -606,7 +606,7 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value={EXISTING_ADDRESS.line1} />
+          <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
@@ -633,7 +633,7 @@ function OptionBForm({ flow, step }) {
               onCancel={() => {}}
             />
           </div>
-          <Field label="Address" value={EXISTING_ADDRESS.line1} />
+          <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
@@ -647,10 +647,10 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
-          <Field label="City" value="Indianapolis" variant="autofill" />
-          <SelectField label="State" value="IN" variant="autofill" />
-          <Field label="ZIP Code" value="46204" variant="autofill" />
+          <Field label="Address" tall value="135 N Pennsylvania St" />
+          <Field label="City" value="Indianapolis" />
+          <SelectField label="State" value="IN" />
+          <Field label="ZIP Code" value="46204" />
           <SelectField label="Type" value="Home" green />
           <Checks primaryChecked />
         </>
@@ -683,7 +683,7 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value="2891 Elm St" variant="focus" />
+          <Field label="Address" tall value="2891 Elm St" variant="focus" />
           <Field label="City" value="Springfield" />
           <SelectField label="State" value="" variant="placeholder" />
           <Field label="ZIP Code" value="" variant="placeholder" />
@@ -716,7 +716,7 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" value="618 N Elm St" variant="focus" />
+          <Field label="Address" tall value="618 N Elm St" variant="focus" />
           <Field label="City" value="Zionsville" />
           <SelectField label="State" value="IN" />
           <Field label="ZIP Code" value="46077" />
@@ -736,12 +736,12 @@ const STEP_LABELS = {
     new: [
       "Form loads blank. Search field sits between Country and Address. All fields visible and empty.",
       "User types in search. Dropdown shows validated address suggestions with matching text bolded.",
-      "User selects a result. Fields populate instantly — no confirmation needed.",
+      "User selects a result. Fields populate instantly with a brief yellow flash — no confirmation needed.",
     ],
     edit: [
       "Form loads with existing data. Note 'Indpls' in City (non-standard).",
       "User selects from search — confirmation bar appears inline. Existing fields dim.",
-      "After Replace: all address fields updated with the validated address.",
+      "After Replace: fields update with a brief yellow flash.",
     ],
     noResults: [
       "User searches a real address — no results found. Message prompts manual entry.",
@@ -754,12 +754,12 @@ const STEP_LABELS = {
     new: [
       "Only Country and Street Address field visible. Minimal form — rest of fields are hidden until an address is entered.",
       "User types — dropdown appears inline on the street field. Same validated suggestions.",
-      "User selects a result. Address, City, State, ZIP fields appear and populate. Progressive disclosure.",
+      "User selects a result. Address, City, State, ZIP fields appear and populate with a brief yellow flash. Progressive disclosure.",
     ],
     edit: [
       "Existing address shows all fields. Search field sits above, same as new address flow.",
       "User types in search. Confirmation bar appears. Existing fields dim.",
-      "After Replace: fields updated with validated address.",
+      "After Replace: fields update with a brief yellow flash.",
     ],
     noResults: [
       "User searches a real address — no results found. Message prompts manual entry.",
