@@ -19,7 +19,8 @@ const EXISTING_ADDRESS = {
 const colors = {
   teal: "#3a8fa3",           // Replace button only
   green: "#4caf50",          // interactive states, autofill, hover
-  greenLight: "#eaf6ea",     // autofill bg, hover bg
+  greenLight: "#eaf6ea",     // autofill bg
+  dropdownHover: "#D9E9CD", // dropdown item hover
   greenDark: "#2d7a30",      // autofill text
   gray: "#d0d0d0",
   grayDark: "#333",
@@ -87,7 +88,7 @@ const s = {
   searchLabel: { fontSize: 14, fontWeight: 500, color: colors.grayMed, marginBottom: 4, display: "block" },
   searchInput: (active) => ({ width: "100%", height: 36, border: "1px solid " + (active ? colors.green : colors.gray), borderRadius: 3, padding: "0 10px 0 32px", fontSize: 13, color: active ? colors.grayDark : colors.grayLight, background: "white", boxSizing: "border-box", fontFamily: "'Prompt', sans-serif", outline: "none", boxShadow: "none" }),
   dropdown: { position: "absolute", width: "100%", zIndex: 10, background: "white", border: "1px solid " + colors.gray, borderTop: "none", boxShadow: "0 3px 10px rgba(0,0,0,0.08)", overflow: "hidden" },
-  dropdownItem: (hover) => ({ padding: "8px 10px", fontSize: 12, color: colors.grayDark, borderBottom: "1px solid #f2f2f2", cursor: "pointer", background: hover ? colors.greenLight : "white" }),
+  dropdownItem: (hover) => ({ padding: "8px 10px", fontSize: 12, color: colors.grayDark, borderBottom: "1px solid #f2f2f2", cursor: "pointer", background: hover ? colors.dropdownHover : "white" }),
   confirm: { background: "#fafafa", border: "1px solid #e0e0e0", borderRadius: 3, padding: "10px 12px", marginTop: 6, fontSize: 12, color: "#555", lineHeight: 1.5 },
   confirmBtns: { display: "flex", gap: 6, marginTop: 8 },
   noResults: { position: "absolute", width: "100%", zIndex: 10, background: "#fafafa", border: "1px solid #e0e0e0", borderTop: "none", padding: "10px 12px", fontSize: 12, color: "#555", lineHeight: 1.5, boxSizing: "border-box" },

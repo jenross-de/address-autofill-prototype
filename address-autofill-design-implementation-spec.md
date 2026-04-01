@@ -15,7 +15,8 @@ Use these values for all new UI in this feature. They are matched to existing Bl
 | Token | Value | Usage |
 |---|---|---|
 | `green` | `#4caf50` | Active/selected states, focus borders, autofill borders, hover highlights, checkmarks |
-| `greenLight` | `#eaf6ea` | Autofill field background, dropdown hover background |
+| `greenLight` | `#eaf6ea` | Autofill field background |
+| `dropdownHover` | `#D9E9CD` | Dropdown item hover background |
 | `greenDark` | `#2d7a30` | Autofill field text |
 | `teal` | `#3a8fa3` | Replace button background only |
 | `link` | `#298BAB` | All inline text links (no underline; follow existing link hover pattern) |
@@ -127,7 +128,7 @@ Each suggestion contains: `street_line`, `secondary`, `city`, `state`, `zipcode`
 
 **Interaction:**
 
-- Hover state: background `#eaf6ea` (green light)
+- Hover state: background `#D9E9CD`
 - Click: sets selected result, transitions to Confirming state
 - Border between items: `1px solid #f2f2f2`
 

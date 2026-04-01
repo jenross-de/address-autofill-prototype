@@ -19,7 +19,8 @@ const EXISTING_ADDRESS = {
 const colors = {
   teal: "#3a8fa3",           // Replace button only
   green: "#4caf50",          // interactive states, autofill, hover
-  greenLight: "#eaf6ea",     // autofill bg, hover bg
+  greenLight: "#eaf6ea",     // autofill bg
+  dropdownHover: "#D9E9CD", // dropdown item hover
   greenDark: "#2d7a30",      // autofill text
   gray: "#d0d0d0",
   grayDark: "#333",
@@ -160,7 +161,7 @@ const s = {
     color: colors.grayDark,
     borderBottom: "1px solid #f2f2f2",
     cursor: "pointer",
-    background: first ? colors.greenLight : "white",
+    background: first ? colors.dropdownHover : "white",
     transition: "background 0.1s",
   }),
   noResults: { position: "absolute", width: "100%", zIndex: 10, background: "#fafafa", border: `1px solid #e0e0e0`, borderTop: "none", padding: "10px 12px", fontSize: 12, color: "#555", lineHeight: 1.5, boxSizing: "border-box" },
