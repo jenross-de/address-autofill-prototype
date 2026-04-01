@@ -93,7 +93,7 @@ const s = {
   btnCancel: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "1px solid #ccc", background: "white", color: "#555", cursor: "pointer", marginRight: 6, fontFamily: "'Prompt', sans-serif" },
   btnSave: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "none", background: colors.teal, color: "white", cursor: "pointer", fontFamily: "'Prompt', sans-serif" },
   field: { marginBottom: 14 },
-  label: { fontSize: 12, color: colors.grayMed, marginBottom: 4, display: "block" },
+  label: { fontSize: 12, fontWeight: 500, color: colors.grayMed, marginBottom: 4, display: "block" },
   labelGreen: { fontSize: 12, color: colors.greenLabel, marginBottom: 4, display: "block" },
   input: (variant) => ({
     width: "100%",
