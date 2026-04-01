@@ -177,6 +177,8 @@ export default function App() {
       setSearchState("idle");
     } else if (/po\s*box/i.test(val)) {
       setSearchState("poBox");
+    } else if (/^fail$/i.test(val.trim())) {
+      setSearchState("apiError");
     } else {
       setSearchState("typing");
     }
@@ -226,7 +228,8 @@ export default function App() {
   const showConfirm = searchState === "confirming";
   const showNoResults = searchState === "noResults";
   const showPoBox = searchState === "poBox";
-  const searchActive = ["typing", "confirming", "noResults", "poBox"].includes(searchState);
+  const showApiError = searchState === "apiError";
+  const searchActive = ["typing", "confirming", "noResults", "poBox", "apiError"].includes(searchState);
 
   return (
     <div style={s.wrapper}>
@@ -323,6 +326,17 @@ export default function App() {
                       <button onClick={handleEnterManually} style={s.manualLink} onMouseEnter={e => e.target.style.color = colors.linkHover} onMouseLeave={e => e.target.style.color = colors.link}>
                         enter the address manually
                       </button>.
+                    </div>
+                  )}
+
+                  {/* API error */}
+                  {showApiError && (
+                    <div style={s.noResults}>
+                      <strong style={{ color: "#555" }}>Search isn't working right now.</strong>
+                      <br />
+                      <button onClick={handleEnterManually} style={s.manualLink} onMouseEnter={e => e.target.style.color = colors.linkHover} onMouseLeave={e => e.target.style.color = colors.link}>
+                        Enter the address manually
+                      </button>
                     </div>
                   )}
                 </div>

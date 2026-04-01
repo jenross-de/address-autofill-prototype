@@ -328,6 +328,16 @@ function ConfirmBar({ address, onReplace, onCancel }) {
   );
 }
 
+function APIErrorMessage() {
+  return (
+    <div style={s.noResults}>
+      <strong style={{ color: "#555" }}>Search isn't working right now.</strong>
+      <br />
+      <span style={{ color: colors.link, cursor: "pointer", padding: "4px 0", display: "inline-block" }} onMouseEnter={e => e.target.style.color = colors.linkHover} onMouseLeave={e => e.target.style.color = colors.link}>Enter the address manually</span>
+    </div>
+  );
+}
+
 function NoResultsMessage() {
   return (
     <div style={s.noResults}>
@@ -544,6 +554,46 @@ function OptionAForm({ flow, step }) {
     }
   }
 
+  if (flow === "apiError") {
+    if (step === 0) {
+      return (
+        <>
+          <SelectField label="Country" value="United States" />
+          <div style={{ ...s.searchWrap, borderBottom: "none", paddingBottom: 0, marginBottom: 6 }}>
+            <div style={s.searchLabel}>Search for an Address</div>
+            <div style={{ position: "relative" }}>
+              <div style={s.searchInput(true)}>
+                <SearchIcon />
+                <span>135 N Penn</span>
+              </div>
+              <APIErrorMessage />
+            </div>
+          </div>
+          <Field label="Address" tall value={EXISTING_ADDRESS.street_line} />
+          <Field label="City" value={EXISTING_ADDRESS.city} />
+          <SelectField label="State" value={EXISTING_ADDRESS.state} />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zipcode} />
+          <SelectField label="Type" value="Home" green />
+          <Checks primaryChecked badAddressChecked />
+        </>
+      );
+    }
+    if (step === 1) {
+      return (
+        <>
+          <SelectField label="Country" value="United States" />
+          <SearchField idle />
+          <Field label="Address" tall value={EXISTING_ADDRESS.street_line} variant="focus" />
+          <Field label="City" value={EXISTING_ADDRESS.city} />
+          <SelectField label="State" value={EXISTING_ADDRESS.state} />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zipcode} />
+          <SelectField label="Type" value="Home" green />
+          <Checks primaryChecked badAddressChecked />
+        </>
+      );
+    }
+  }
+
   return null;
 }
 
@@ -751,6 +801,10 @@ const STEP_LABELS = {
       "User types 'PO Box...' — warning appears. Fields below remain empty.",
       "User types a street address manually. Search remains available to retry.",
     ],
+    apiError: [
+      "User types in search — API fails to respond. Error message appears with link to enter manually.",
+      "User clicks 'Enter the address manually' — search resets to idle, focus shifts to Address field.",
+    ],
   },
   //   B: {
   //     new: [
@@ -813,6 +867,9 @@ export default function App() {
         </button>
         <button style={s.flowBtn(flow === "noResults")} onClick={() => setFlow("noResults")}>
           No Results / Manual
+        </button>
+        <button style={s.flowBtn(flow === "apiError")} onClick={() => setFlow("apiError")}>
+          API Error
         </button>
       </div>
 

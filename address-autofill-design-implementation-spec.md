@@ -91,6 +91,7 @@ This was explicitly considered and declined for two reasons:
 | Replaced | User clicks Replace | Confirmation card closes. Fields update. Search clears. Bad Address checkbox clears (with flash). |
 | No Results | Search returns no matches | No-results message with "Enter the address manually" link. |
 | PO Box | Input matches `/po\s*box/i` | Error message with "enter the address manually" link. |
+| API Error | API request fails (timeout, network error, non-200) | Error message with "Enter the address manually" link. Existing field values unchanged. |
 
 ### Search input
 
@@ -329,6 +330,35 @@ V2 testing surfaced a Major issue: with editable fields, some users (mainly Volu
 - [ ] Flash is noticeable but brief (~800ms total)
 - [ ] Fields return to normal default styling after flash completes
 - [ ] Flash does not occur when fields are edited manually (only on Replace)
+
+---
+
+## Component: API Error
+
+**Trigger:** The Smarty API request fails — timeout, network error, or non-200 response. This is distinct from No Results (API worked but returned nothing) and PO Box (API worked, input was invalid).
+
+**Copy:**
+
+> **Search isn't working right now.**
+> [Enter the address manually]
+
+**Key distinction from No Results:** The copy does not imply the address doesn't exist — it signals a temporary system issue. Do not use error red or alarming language. This is not the user's fault.
+
+**"Enter the address manually" link behavior:** Identical to No Results and PO Box — resets search state to idle, preserves search input value, focuses Address `<textarea>` after ~50ms.
+
+**Styling:** Same container as no-results and PO Box (`#fafafa` background, `1px solid #e0e0e0` border). Link is `color: #298BAB`, `text-decoration: none`, `fontWeight: 500`, `padding: 4px 0`. Follow existing link hover pattern.
+
+**Existing field values:** Must remain unchanged. The API error does not modify any address fields.
+
+**Retry:** No explicit retry button. The user can simply continue typing or clear the search field to try again — the search field remains active.
+
+### Acceptance criteria
+
+- [ ] API error state triggers on timeout, network failure, or non-200 response
+- [ ] Existing address field values are not modified
+- [ ] "Enter the address manually" link resets state and focuses Address field
+- [ ] Search input value is retained after clicking the link
+- [ ] User can retry by continuing to type without any additional action
 
 ---
 
