@@ -44,10 +44,11 @@ const s = {
   crmLayout: { display: "flex" },
   sidebar: { width: 64, background: colors.sidebar, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 14, gap: 16, flexShrink: 0, minHeight: 500 },
   sideIcon: (active) => ({ width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center", borderLeft: active ? "3px solid #4caf50" : "3px solid transparent", paddingLeft: 2 }),
-  body: { flex: 1, background: "white", display: "flex" },
+  body: { flex: 1, background: "white", display: "flex", flexDirection: "column" },
+  contentRow: { display: "flex", flex: 1 },
   main: { flex: 1, padding: "18px 24px 24px" },
   rightPanel: { width: 240, borderLeft: "1px solid #e5e5e5", padding: "16px 18px", background: "white" },
-  header: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 },
+  header: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 24px", borderBottom: "1px solid #e0e0e0" },
   title: { fontSize: 18, fontWeight: 500, color: colors.grayDark },
   btnCancel: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "1px solid #ccc", background: "white", color: "#555", cursor: "pointer", marginRight: 6, fontFamily: "'Prompt', sans-serif" },
   btnSave: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "none", background: colors.teal, color: "white", cursor: "pointer", fontFamily: "'Prompt', sans-serif" },
@@ -243,15 +244,16 @@ export default function App() {
         <div style={s.crmLayout}>
           <SidebarNav />
           <div style={s.body}>
-            <div style={s.main}>
-              {/* Header */}
-              <div style={s.header}>
-                <div style={s.title}>Edit Address</div>
-                <div>
-                  <button style={s.btnCancel}>Cancel</button>
-                  <button style={s.btnSave}>Save</button>
-                </div>
+            {/* Header */}
+            <div style={s.header}>
+              <div style={s.title}>Edit Address</div>
+              <div>
+                <button style={s.btnCancel}>Cancel</button>
+                <button style={s.btnSave}>Save</button>
               </div>
+            </div>
+            <div style={s.contentRow}>
+            <div style={s.main}>
 
               {/* Country */}
               <div style={s.field}>
@@ -421,6 +423,7 @@ export default function App() {
                 <div style={{ fontSize: 13, fontWeight: 600, color: "#333", padding: "10px 14px", borderBottom: "1px solid #e0e0e0" }}>Other Addresses</div>
                 <div style={{ fontSize: 13, color: "#999", padding: "10px 14px" }}>None</div>
               </div>
+            </div>
             </div>
           </div>
         </div>
