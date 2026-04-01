@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 
+// Smarty US Autocomplete Pro API response format
 const MOCK_RESULTS = [
-  { line1: "135 N Pennsylvania St", city: "Indianapolis", state: "IN", zip: "46204" },
-  { line1: "135 N Pennsylvania Ave", city: "Lansing", state: "MI", zip: "48912" },
-  { line1: "135 N Penn St", city: "York", state: "PA", zip: "17401" },
+  { street_line: "135 N Pennsylvania St", secondary: "", city: "Indianapolis", state: "IN", zipcode: "46204", entries: 0 },
+  { street_line: "135 N Pennsylvania Ave", secondary: "", city: "Lansing", state: "MI", zipcode: "48912", entries: 0 },
+  { street_line: "135 N Penn St", secondary: "Apt", city: "York", state: "PA", zipcode: "17401", entries: 4 },
 ];
 
 const EXISTING_ADDRESS = {
-  line1: "42 Wallaby Way",
-  line2: "Apt 4B",
+  street_line: "42 Wallaby Way",
+  secondary: "",
   city: "Indpls",
   state: "IN",
-  zip: "46201",
+  zipcode: "46201",
 };
 
 // ─── Styles ───
@@ -284,7 +285,11 @@ function SearchField({ active, value, idle }) {
           <span style={{}}>{idle ? "Start typing an address..." : value}</span>
         </div>
       </div>
-
+      {idle && (
+        <div style={{ fontSize: 11, color: colors.grayLight, fontStyle: "italic", marginTop: 4 }}>
+          Type an address above to auto-fill the fields below
+        </div>
+      )}
     </div>
   );
 }
@@ -295,7 +300,10 @@ function DropdownResults({ results, onSelect }) {
     <div style={s.dropdown}>
       {results.map((r, i) => (
         <div key={i} style={s.dropdownItem(i === 0)} onClick={() => onSelect(r)}>
-          <strong>{r.line1}</strong>, {r.city}, {r.state} {r.zip}
+          {r.street_line}{r.secondary ? ` ${r.secondary}` : ""}{r.entries > 0 && <span style={{ fontSize: 11, color: "#888" }}> ({r.entries} entries)</span>}
+          {" — "}
+          <strong style={{ fontWeight: 600, color: "#333" }}>{r.city}, {r.state}</strong>{" "}
+          <span style={{ color: "#888" }}>{r.zipcode}</span>
         </div>
       ))}
     </div>
@@ -305,7 +313,7 @@ function DropdownResults({ results, onSelect }) {
 function ConfirmBar({ address, onReplace, onCancel }) {
   return (
     <div style={s.confirm}>
-      Replace current address with <strong style={{ color: colors.grayDark }}>{address.line1}, {address.city}, {address.state} {address.zip}</strong>?
+      Replace all address fields with <strong style={{ color: colors.grayDark }}>{address.street_line}, {address.city}, {address.state} {address.zipcode}</strong>?
       <div style={s.confirmBtns}>
         <button onClick={onReplace} style={{ ...s.btnSave, fontSize: 12, padding: "5px 14px" }}>Replace</button>
         <button onClick={onCancel} style={{ ...s.btnCancel, fontSize: 12, padding: "5px 14px", marginRight: 0 }}>Cancel</button>
@@ -319,7 +327,7 @@ function NoResultsMessage() {
     <div style={s.noResults}>
       <strong style={{ color: "#555" }}>No matching addresses found.</strong>
       <br />
-      Enter the address manually in the fields below.
+      <span style={{ color: colors.teal, textDecoration: "underline", cursor: "pointer" }}>Enter the address manually</span>
     </div>
   );
 }
@@ -329,7 +337,7 @@ function POBoxWarning() {
     <div style={s.noResults}>
       <strong style={{ color: "#333" }}>PO Boxes aren't supported.</strong>
       <br />
-      Please enter a deliverable street address instead.
+      Please enter a street address instead, or <span style={{ color: colors.teal, textDecoration: "underline", cursor: "pointer" }}>enter the address manually</span>.
     </div>
   );
 }
@@ -401,10 +409,10 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <SearchField idle />
-          <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
+          <Field label="Address" tall value={EXISTING_ADDRESS.street_line} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
-          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zipcode} />
           <SelectField label="Type" value="Home" green />
           <Checks primaryChecked badAddressChecked />
         </>
@@ -428,10 +436,10 @@ function OptionAForm({ flow, step }) {
               onCancel={() => {}}
             />
           </div>
-          <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
+          <Field label="Address" tall value={EXISTING_ADDRESS.street_line} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
-          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zipcode} />
           <SelectField label="Type" value="Home" green />
           <Checks primaryChecked badAddressChecked />
         </>
@@ -594,10 +602,10 @@ function OptionAForm({ flow, step }) {
 //         <>
 //           <SelectField label="Country" value="United States" />
 //           <SearchField idle />
-//           <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
+//           <Field label="Address" tall value={EXISTING_ADDRESS.street_line} />
 //           <Field label="City" value={EXISTING_ADDRESS.city} />
 //           <SelectField label="State" value={EXISTING_ADDRESS.state} />
-//           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
+//           <Field label="ZIP Code" value={EXISTING_ADDRESS.zipcode} />
 //           <SelectField label="Type" value="Home" green />
 //           <Checks primaryChecked />
 //         </>
@@ -621,10 +629,10 @@ function OptionAForm({ flow, step }) {
 //               onCancel={() => {}}
 //             />
 //           </div>
-//           <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
+//           <Field label="Address" tall value={EXISTING_ADDRESS.street_line} />
 //           <Field label="City" value={EXISTING_ADDRESS.city} />
 //           <SelectField label="State" value={EXISTING_ADDRESS.state} />
-//           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
+//           <Field label="ZIP Code" value={EXISTING_ADDRESS.zipcode} />
 //           <SelectField label="Type" value="Home" green />
 //           <Checks primaryChecked />
 //         </>
@@ -729,7 +737,7 @@ const STEP_LABELS = {
     edit: [
       "Form loads with existing data. Note 'Indpls' in City (non-standard).",
       "User selects from search — confirmation bar appears inline.",
-      "After Replace: fields update with a brief yellow flash. Bad Address flag is automatically cleared.",
+      "After Replace: fields update with a brief yellow flash. Bad Address flag is automatically cleared with a green flash to make the change visible.",
     ],
     noResults: [
       "User searches a real address — no results found. Message prompts manual entry.",
