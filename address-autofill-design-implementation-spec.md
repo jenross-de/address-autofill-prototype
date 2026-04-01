@@ -85,7 +85,7 @@ This was explicitly considered and declined for two reasons:
 
 | State | Trigger | UI |
 |---|---|---|
-| Idle | Empty search input | Placeholder text: "Start typing an address..." Search icon in gray (`#999`). |
+| Idle | Empty search input | Placeholder text: "Start typing an address..." Search icon `#555`. |
 | Typing | User types non-PO-Box text | Search icon turns green (`#4caf50`). Dropdown appears with results. Input border green. |
 | Confirming | User clicks a dropdown result | Dropdown closes. Confirmation card appears below search. |
 | Replaced | User clicks Replace | Confirmation card closes. Fields update. Search clears. Bad Address checkbox clears (with flash). |
