@@ -89,8 +89,8 @@ const s = {
   rightPanel: { width: 240, borderLeft: "1px solid #e5e5e5", padding: "16px 18px", background: "white" },
   header: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 },
   title: { fontSize: 18, fontWeight: 500, color: colors.grayDark },
-  btnCancel: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "1px solid #ccc", background: "white", color: "#555", cursor: "pointer", marginRight: 6 },
-  btnSave: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "none", background: colors.teal, color: "white", cursor: "pointer" },
+  btnCancel: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "1px solid #ccc", background: "white", color: "#555", cursor: "pointer", marginRight: 6, fontFamily: "'Prompt', sans-serif" },
+  btnSave: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "none", background: colors.teal, color: "white", cursor: "pointer", fontFamily: "'Prompt', sans-serif" },
   field: { marginBottom: 14 },
   label: { fontSize: 12, color: colors.grayMed, marginBottom: 4, display: "block" },
   labelGreen: { fontSize: 12, color: colors.greenLabel, marginBottom: 4, display: "block" },
@@ -102,6 +102,7 @@ const s = {
     fontSize: 13,
     color: variant === "autofill" ? colors.tealDark : variant === "placeholder" ? colors.grayLight : variant === "dim" ? colors.grayLight : colors.grayDark,
     background: variant === "autofill" ? colors.tealLight : variant === "dim" ? "#fafafa" : "white",
+    borderRadius: 3,
     boxSizing: "border-box",
     fontFamily: "'Prompt', sans-serif",
     display: "flex",
@@ -114,6 +115,7 @@ const s = {
     width: "100%",
     height: 36,
     border: `1px solid ${variant === "autofill" ? colors.teal : colors.gray}`,
+    borderRadius: 3,
     padding: "0 28px 0 10px",
     fontSize: 13,
     color: variant === "autofill" ? colors.tealDark : variant === "placeholder" ? colors.grayLight : colors.grayDark,
@@ -272,7 +274,7 @@ function SearchField({ active, value, idle, sublabel }) {
   return (
     <div style={s.searchWrap}>
       <div style={s.searchLabel}>
-        Search for an address{" "}
+        Search for an Address{" "}
         {sublabel && <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0, color: colors.grayLight }}>{sublabel}</span>}
       </div>
       <div style={{ position: "relative" }}>
@@ -369,7 +371,7 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ ...s.searchWrap, borderBottom: "none", paddingBottom: 0, marginBottom: 6 }}>
-            <div style={s.searchLabel}>Search for an address</div>
+            <div style={s.searchLabel}>Search for an Address</div>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
@@ -423,7 +425,7 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ marginBottom: 10 }}>
-            <div style={s.searchLabel}>Search for an address</div>
+            <div style={s.searchLabel}>Search for an Address</div>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
@@ -467,7 +469,7 @@ function OptionAForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ ...s.searchWrap, borderBottom: "none", paddingBottom: 0, marginBottom: 6 }}>
-            <div style={s.searchLabel}>Search for an address</div>
+            <div style={s.searchLabel}>Search for an Address</div>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
@@ -580,7 +582,7 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ marginBottom: 10 }}>
-            <div style={s.searchLabel}>Search for an address</div>
+            <div style={s.searchLabel}>Search for an Address</div>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
