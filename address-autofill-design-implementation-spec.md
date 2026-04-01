@@ -179,17 +179,19 @@ On mobile devices, the soft keyboard reduces the visible viewport when the searc
 
 **"enter the address manually" link behavior:**
 
-1. Clears the search input value
-2. Resets search state to idle (closes the error message)
-3. After ~50ms (allow state update), shifts focus to the Address `<textarea>`
+1. Resets search state to idle (closes the error message)
+2. After ~50ms (allow state update), shifts focus to the Address `<textarea>`
 
-**Styling:** Same container as no-results (`#fafafa` background, `1px solid #e0e0e0` border). Link is `color: #298BAB`, `text-decoration: none`, `fontWeight: 500`. Follow existing link hover pattern.
+The search input value is **not cleared** — the user's typed text is preserved in case they want to refine and search again. Only the error state is dismissed.
+
+**Styling:** Same container as no-results (`#fafafa` background, `1px solid #e0e0e0` border). Link is `color: #298BAB`, `text-decoration: none`, `fontWeight: 500`. Follow existing link hover pattern. Give the link sufficient vertical padding (`4px 0`) for touch targets — do not make the entire dialog container interactive.
 
 ### Acceptance criteria
 
 - [ ] PO Box pattern triggers error (case-insensitive, with or without space)
 - [ ] Copy says "street address" — NOT "deliverable street address"
-- [ ] "enter the address manually" link clears search, focuses Address field
+- [ ] "enter the address manually" link resets state and focuses Address field
+- [ ] Search input value is retained after clicking the link
 - [ ] Focus shift works reliably (slight delay for state update)
 
 ---
@@ -203,15 +205,16 @@ On mobile devices, the soft keyboard reduces the visible viewport when the searc
 > **No matching addresses found.**
 > [Enter the address manually]
 
-**Link behavior:** Identical to PO Box manual link — clears search, resets state, focuses Address textarea.
+**Link behavior:** Identical to PO Box manual link — resets state to idle and focuses Address textarea. Search input value is retained.
 
-**Styling:** Same container as PO Box error (`#fafafa` background, `1px solid #e0e0e0` border). Link is `color: #298BAB`, `text-decoration: none`, `fontWeight: 500`. Follow existing link hover pattern.
+**Styling:** Same container as PO Box error (`#fafafa` background, `1px solid #e0e0e0` border). Link is `color: #298BAB`, `text-decoration: none`, `fontWeight: 500`. Follow existing link hover pattern. Give the link sufficient vertical padding (`4px 0`) for touch targets — do not make the entire dialog container interactive.
 
 ### Acceptance criteria
 
 - [ ] No-results message appears when API returns zero suggestions
 - [ ] "Enter the address manually" is a clickable link (not plain text instruction)
-- [ ] Link clears search and focuses Address field
+- [ ] Link resets state and focuses Address field
+- [ ] Search input value is retained after clicking the link
 
 ---
 

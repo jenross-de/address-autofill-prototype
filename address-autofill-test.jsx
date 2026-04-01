@@ -112,7 +112,7 @@ const s = {
     fontWeight: 500,
     background: "none",
     border: "none",
-    padding: 0,
+    padding: "4px 0",
     fontSize: 12,
     fontFamily: "'Prompt', sans-serif",
   },
@@ -214,7 +214,6 @@ export default function App() {
 
   function handleEnterManually() {
     setSearchState("idle");
-    setSearchValue("");
     setSelectedResult(null);
     setTimeout(() => {
       if (addressRef.current) addressRef.current.focus();
