@@ -439,10 +439,10 @@ function OptionAForm({ flow, step }) {
               onCancel={() => {}}
             />
           </div>
-          <Field label="Address" value={EXISTING_ADDRESS.line1} variant="dim" />
-          <Field label="City" value={EXISTING_ADDRESS.city} variant="dim" />
-          <SelectField label="State" value={EXISTING_ADDRESS.state} variant="dim" />
-          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} variant="dim" />
+          <Field label="Address" value={EXISTING_ADDRESS.line1} />
+          <Field label="City" value={EXISTING_ADDRESS.city} />
+          <SelectField label="State" value={EXISTING_ADDRESS.state} />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
           <SelectField label="Type" value="Home" green />
           <Checks primaryChecked />
         </>
@@ -633,10 +633,10 @@ function OptionBForm({ flow, step }) {
               onCancel={() => {}}
             />
           </div>
-          <Field label="Address" value={EXISTING_ADDRESS.line1} variant="dim" />
-          <Field label="City" value={EXISTING_ADDRESS.city} variant="dim" />
-          <SelectField label="State" value={EXISTING_ADDRESS.state} variant="dim" />
-          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} variant="dim" />
+          <Field label="Address" value={EXISTING_ADDRESS.line1} />
+          <Field label="City" value={EXISTING_ADDRESS.city} />
+          <SelectField label="State" value={EXISTING_ADDRESS.state} />
+          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
           <SelectField label="Type" value="Home" green />
           <Checks primaryChecked />
         </>
