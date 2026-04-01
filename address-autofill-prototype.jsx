@@ -284,22 +284,11 @@ function SearchField({ active, value, idle }) {
           <span style={{}}>{idle ? "Start typing an address..." : value}</span>
         </div>
       </div>
-      {idle && <SearchTips />}
+
     </div>
   );
 }
 
-function SearchTips() {
-  return (
-    <div style={{ marginTop: 6, padding: "8px 10px", background: "#f9f9f9", border: "1px solid #eee", borderRadius: 3, fontSize: 11, lineHeight: 1.7, color: colors.grayMed }}>
-      <div style={{ fontWeight: 600, color: "#555", marginBottom: 3 }}>Tips</div>
-      <div><span style={{ color: "#3a9a4a", marginRight: 5 }}>✓</span>Enter a street address (e.g. "123 Main St, Indianapolis")</div>
-      <div><span style={{ color: "#3a9a4a", marginRight: 5 }}>✓</span>Include city or ZIP to narrow results</div>
-      <div><span style={{ color: colors.error, marginRight: 5 }}>✗</span>PO Boxes aren't supported — use a deliverable street address</div>
-      <div><span style={{ color: colors.error, marginRight: 5 }}>✗</span>Skip apartment or suite numbers</div>
-    </div>
-  );
-}
 
 function DropdownResults({ results, onSelect }) {
   return (
@@ -559,7 +548,6 @@ function OptionBForm({ flow, step }) {
                 <span style={{}}>Start typing a street address...</span>
               </div>
             </div>
-            <SearchTips />
           </div>
           <SelectField label="Type" value="Home" green />
           <Checks />
