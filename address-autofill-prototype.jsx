@@ -47,6 +47,7 @@ const s = {
     cursor: "pointer",
     marginBottom: -2,
     transition: "all 0.15s",
+    fontFamily: "'Prompt', sans-serif",
   }),
   flowBar: { display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" },
   flowBtn: (active) => ({
@@ -156,8 +157,8 @@ const s = {
     background: first ? colors.tealLight : "white",
     transition: "background 0.1s",
   }),
-  noResults: { background: "#fafafa", border: `1px solid #e0e0e0`, borderTop: "none", padding: "10px 12px", fontSize: 12, color: colors.grayMed, lineHeight: 1.5 },
-  confirm: { background: colors.warn, border: `1px solid ${colors.warnBorder}`, borderRadius: 3, padding: "10px 12px", marginTop: 6, fontSize: 12, color: colors.warnText, lineHeight: 1.5 },
+  noResults: { background: "#fafafa", border: `1px solid #e0e0e0`, borderTop: "none", padding: "10px 12px", fontSize: 12, color: "#555", lineHeight: 1.5 },
+  confirm: { background: "#fafafa", border: `1px solid #e0e0e0`, borderRadius: 3, padding: "10px 12px", marginTop: 6, fontSize: 12, color: "#555", lineHeight: 1.5 },
   confirmNote: { fontSize: 11, color: "#998a00", marginTop: 3, fontStyle: "italic" },
   confirmBtns: { display: "flex", gap: 6, marginTop: 8 },
   dot: { display: "inline-block", width: 5, height: 5, borderRadius: "50%", background: colors.teal, marginLeft: 5, verticalAlign: "middle" },
@@ -266,6 +267,9 @@ function Checks({ primaryChecked = true }) {
       <div style={s.checkItem}>
         <div style={s.checkBox(primaryChecked)}>{primaryChecked ? "✓" : ""}</div> Primary?
       </div>
+      <div style={s.checkItem}>
+        <div style={s.checkBox(false)}></div> Bad Address?
+      </div>
     </div>
   );
 }
@@ -280,7 +284,7 @@ function SearchField({ active, value, idle, sublabel }) {
       <div style={{ position: "relative" }}>
         <div style={s.searchInput(active)}>
           <SearchIcon />
-          <span style={{ marginLeft: 22 }}>{idle ? "Start typing an address..." : value}</span>
+          <span style={{}}>{idle ? "Start typing an address..." : value}</span>
         </div>
       </div>
       {idle && <SearchTips />}
@@ -336,8 +340,8 @@ function NoResultsMessage() {
 
 function POBoxWarning() {
   return (
-    <div style={{ ...s.noResults, background: "#fff8e1", border: `1px solid ${colors.warnBorder}`, borderTop: "none", color: colors.warnText }}>
-      <strong style={{ color: "#665a00" }}>PO Boxes aren't supported.</strong>
+    <div style={s.noResults}>
+      <strong style={{ color: "#333" }}>PO Boxes aren't supported.</strong>
       <br />
       Please enter a deliverable street address instead.
     </div>
@@ -375,7 +379,7 @@ function OptionAForm({ flow, step }) {
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>135 N Penn</span>
+                <span style={{}}>135 N Penn</span>
               </div>
               <DropdownResults results={MOCK_RESULTS} onSelect={() => {}} />
             </div>
@@ -429,7 +433,7 @@ function OptionAForm({ flow, step }) {
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>135 N Pennsylvania</span>
+                <span style={{}}>135 N Pennsylvania</span>
               </div>
             </div>
             <ConfirmBar
@@ -473,7 +477,7 @@ function OptionAForm({ flow, step }) {
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>2891 Elm St Springfield</span>
+                <span style={{}}>2891 Elm St Springfield</span>
               </div>
               <NoResultsMessage />
             </div>
@@ -510,7 +514,7 @@ function OptionAForm({ flow, step }) {
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>PO Box 1234 Zionsville</span>
+                <span style={{}}>PO Box 1234 Zionsville</span>
               </div>
               <POBoxWarning />
             </div>
@@ -551,11 +555,11 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ marginBottom: 10 }}>
-            <label style={s.label}>Address</label>
+            <div style={s.searchLabel}>Search for an Address</div>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(false)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>Start typing a street address...</span>
+                <span style={{}}>Start typing a street address...</span>
               </div>
             </div>
             <SearchTips />
@@ -570,11 +574,11 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ marginBottom: 10 }}>
-            <label style={s.label}>Address</label>
+            <div style={s.searchLabel}>Search for an Address</div>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>135 N Penn</span>
+                <span style={{}}>135 N Penn</span>
               </div>
               <DropdownResults results={MOCK_RESULTS} onSelect={() => {}} />
             </div>
@@ -623,7 +627,7 @@ function OptionBForm({ flow, step }) {
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>135 N Pennsylvania</span>
+                <span style={{}}>135 N Pennsylvania</span>
               </div>
             </div>
             <ConfirmBar
@@ -663,11 +667,11 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ marginBottom: 10 }}>
-            <label style={s.label}>Address</label>
+            <div style={s.searchLabel}>Search for an Address</div>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>2891 Elm St Springfield</span>
+                <span style={{}}>2891 Elm St Springfield</span>
               </div>
               <NoResultsMessage />
             </div>
@@ -681,6 +685,7 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
+          <SearchField idle />
           <Field label="Address" value="2891 Elm St" variant="focus" />
           <Field label="City" value="Springfield" />
           <SelectField label="State" value="" variant="placeholder" />
@@ -695,11 +700,11 @@ function OptionBForm({ flow, step }) {
         <>
           <SelectField label="Country" value="United States" />
           <div style={{ marginBottom: 10 }}>
-            <label style={s.label}>Address</label>
+            <div style={s.searchLabel}>Search for an Address</div>
             <div style={{ position: "relative" }}>
               <div style={s.searchInput(true)}>
                 <SearchIcon />
-                <span style={{ marginLeft: 22 }}>PO Box 1234 Zionsville</span>
+                <span style={{}}>PO Box 1234 Zionsville</span>
               </div>
               <POBoxWarning />
             </div>
@@ -713,6 +718,7 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
+          <SearchField idle />
           <Field label="Address" value="618 N Elm St" variant="focus" />
           <Field label="City" value="Zionsville" />
           <SelectField label="State" value="IN" />
