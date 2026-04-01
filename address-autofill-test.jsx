@@ -17,8 +17,10 @@ const EXISTING_ADDRESS = {
 };
 
 const colors = {
-  teal: "#3a8fa3",
-  tealLight: "#edf6f9",
+  teal: "#3a8fa3",           // Replace button only
+  green: "#4caf50",          // interactive states, autofill, hover
+  greenLight: "#eaf6ea",     // autofill bg, hover bg
+  greenDark: "#2d7a30",      // autofill text
   gray: "#d0d0d0",
   grayDark: "#333",
   inputText: "#202020",
@@ -26,7 +28,7 @@ const colors = {
   grayLight: "#aaa",
   grayBg: "#efefef",
   sidebar: "#3d4548",
-  greenLabel: "#3a8fa3",
+  greenLabel: "#4caf50",
   link: "#298BAB",
   error: "#ea1d35",
 };
@@ -81,9 +83,9 @@ const s = {
   select: { width: "100%", height: 36, border: "1px solid " + colors.gray, borderRadius: 3, padding: "0 28px 0 10px", fontSize: 13, color: colors.inputText, background: "white url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E\") no-repeat right 10px center", boxSizing: "border-box", fontFamily: "'Prompt', sans-serif" },
   searchWrap: { marginBottom: 10 },
   searchLabel: { fontSize: 14, fontWeight: 500, color: colors.grayMed, marginBottom: 4, display: "block" },
-  searchInput: (active) => ({ width: "100%", height: 36, border: "1px solid " + (active ? colors.teal : colors.gray), borderRadius: 3, padding: "0 10px 0 32px", fontSize: 13, color: active ? colors.grayDark : colors.grayLight, background: "white", boxSizing: "border-box", fontFamily: "'Prompt', sans-serif", outline: "none", boxShadow: active ? "0 0 0 2px rgba(74,155,142,0.15)" : "none" }),
+  searchInput: (active) => ({ width: "100%", height: 36, border: "1px solid " + (active ? colors.green : colors.gray), borderRadius: 3, padding: "0 10px 0 32px", fontSize: 13, color: active ? colors.grayDark : colors.grayLight, background: "white", boxSizing: "border-box", fontFamily: "'Prompt', sans-serif", outline: "none", boxShadow: "none" }),
   dropdown: { position: "absolute", width: "100%", zIndex: 10, background: "white", border: "1px solid " + colors.gray, borderTop: "none", boxShadow: "0 3px 10px rgba(0,0,0,0.08)", overflow: "hidden" },
-  dropdownItem: (hover) => ({ padding: "8px 10px", fontSize: 12, color: colors.grayDark, borderBottom: "1px solid #f2f2f2", cursor: "pointer", background: hover ? colors.tealLight : "white" }),
+  dropdownItem: (hover) => ({ padding: "8px 10px", fontSize: 12, color: colors.grayDark, borderBottom: "1px solid #f2f2f2", cursor: "pointer", background: hover ? colors.greenLight : "white" }),
   confirm: { background: "#fafafa", border: "1px solid #e0e0e0", borderRadius: 3, padding: "10px 12px", marginTop: 6, fontSize: 12, color: "#555", lineHeight: 1.5 },
   confirmBtns: { display: "flex", gap: 6, marginTop: 8 },
   noResults: { position: "absolute", width: "100%", zIndex: 10, background: "#fafafa", border: "1px solid #e0e0e0", borderTop: "none", padding: "10px 12px", fontSize: 12, color: "#555", lineHeight: 1.5, boxSizing: "border-box" },
@@ -96,8 +98,8 @@ const s = {
     borderRadius: 2,
     display: "flex", alignItems: "center", justifyContent: "center",
     fontSize: 11,
-    color: colors.teal,
-    background: flash ? "#b8f0d0" : (checked ? colors.tealLight : "white"),
+    color: colors.green,
+    background: flash ? "#b8f0d0" : (checked ? colors.greenLight : "white"),
     cursor: "pointer",
     transition: "background 0.4s ease, box-shadow 0.4s ease",
     boxShadow: flash ? "0 0 0 4px rgba(58,143,163,0.3)" : "none",
@@ -117,7 +119,7 @@ const s = {
 
 function SearchIcon({ active }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ position: "absolute", left: 10, top: 11, color: active ? colors.teal : "#999", pointerEvents: "none" }}>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ position: "absolute", left: 10, top: 11, color: active ? colors.green : "#999", pointerEvents: "none" }}>
       <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" strokeWidth="1.3" />
       <line x1="10" y1="10" x2="14" y2="14" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
@@ -402,7 +404,7 @@ export default function App() {
                   {badAddressFlash && (
                     <span style={{
                       fontSize: 10,
-                      color: colors.teal,
+                      color: colors.green,
                       fontWeight: 500,
                       marginLeft: 4,
                     }}>
