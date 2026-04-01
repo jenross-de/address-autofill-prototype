@@ -34,7 +34,7 @@ const colors = {
 };
 
 const s = {
-  wrapper: { fontFamily: "Arial, sans-serif", maxWidth: 860, margin: "0 auto", padding: "0", background: colors.grayBg, minHeight: "100vh" },
+  wrapper: { fontFamily: "'Prompt', sans-serif", maxWidth: 860, margin: "0 auto", padding: "0", background: colors.grayBg, minHeight: "100vh" },
   tabBar: { display: "flex", gap: 0, marginBottom: 20, borderBottom: `2px solid ${colors.gray}` },
   tab: (active) => ({
     padding: "10px 20px",
@@ -80,7 +80,7 @@ const s = {
   stepLabel: { fontSize: 12, color: colors.grayMed, marginBottom: 12, lineHeight: 1.5 },
   crmFrame: { background: "white", overflow: "hidden", border: `1px solid #ddd`, marginTop: 0 },
   crmTopBar: { background: "white", borderBottom: "1px solid #e0e0e0", padding: "10px 0", display: "flex", justifyContent: "center", alignItems: "center" },
-  crmTopSearch: { width: 340, height: 34, border: "1px solid #d0d0d0", borderRadius: 4, padding: "0 14px", fontSize: 13, color: "#aaa", background: "white", boxSizing: "border-box", fontFamily: "Arial, sans-serif", display: "flex", alignItems: "center" },
+  crmTopSearch: { width: 340, height: 34, border: "1px solid #d0d0d0", borderRadius: 4, padding: "0 14px", fontSize: 13, color: "#aaa", background: "white", boxSizing: "border-box", fontFamily: "'Prompt', sans-serif", display: "flex", alignItems: "center" },
   crmLayout: { display: "flex" },
   sidebar: { width: 64, background: colors.sidebar, display: "flex", flexDirection: "column", alignItems: "center", paddingTop: 14, gap: 16, flexShrink: 0, minHeight: 460 },
   sideIcon: (active) => ({ width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center", position: "relative", borderLeft: active ? `3px solid ${colors.sidebarActive}` : "3px solid transparent", paddingLeft: 2 }),
@@ -103,7 +103,7 @@ const s = {
     color: variant === "autofill" ? colors.tealDark : variant === "placeholder" ? colors.grayLight : variant === "dim" ? colors.grayLight : colors.grayDark,
     background: variant === "autofill" ? colors.tealLight : variant === "dim" ? "#fafafa" : "white",
     boxSizing: "border-box",
-    fontFamily: "Arial, sans-serif",
+    fontFamily: "'Prompt', sans-serif",
     display: "flex",
     alignItems: "center",
     transition: "all 0.2s",
@@ -119,7 +119,7 @@ const s = {
     color: variant === "autofill" ? colors.tealDark : variant === "placeholder" ? colors.grayLight : colors.grayDark,
     background: `${variant === "autofill" ? colors.tealLight : "white"} url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E") no-repeat right 10px center`,
     boxSizing: "border-box",
-    fontFamily: "Arial, sans-serif",
+    fontFamily: "'Prompt', sans-serif",
     display: "flex",
     alignItems: "center",
     transition: "all 0.2s",
@@ -138,7 +138,7 @@ const s = {
     color: active ? colors.grayDark : colors.grayLight,
     background: "white",
     boxSizing: "border-box",
-    fontFamily: "Arial, sans-serif",
+    fontFamily: "'Prompt', sans-serif",
     position: "relative",
     display: "flex",
     alignItems: "center",
