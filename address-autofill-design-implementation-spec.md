@@ -56,6 +56,28 @@ Users editing a constituent's address can type into a "Search for an Address" fi
 
 ---
 
+## Scope: US addresses only
+
+The address autofill feature applies **only when Country = United States**.
+
+For non-US countries, the Edit Address form has a different structure — no City, State, or ZIP Code fields, just a free-form Address textarea. The "Search for an Address" field and all autocomplete functionality should not be rendered in this case.
+
+**Implementation:** Conditionally render the search field based on the selected Country value. If Country changes away from United States while the search is in use, reset search state to idle and hide the search field.
+
+---
+
+## Focus behavior on page load
+
+**Decision: retain focus on the Country field (existing behavior). Do not auto-focus the Search for an Address field.**
+
+This was explicitly considered and declined for two reasons:
+
+1. **Accessibility (WCAG 2.4.3, Level A — Focus Order):** Focus must follow a logical sequence that matches DOM order and preserves operability. Country sits above the search field in the DOM and determines whether the search field appears at all. Auto-focusing the search field would cause screen reader and keyboard users to encounter fields out of DOM order, requiring them to navigate backwards to reach Country — a conformance failure at the baseline level.
+
+2. **User experience:** Country controls the entire form structure. Focusing past it assumes the user's intent (replace a US address) before that's been established. Users who only need to correct a single field would also land in the wrong place. The search field's discoverability is addressed through the helper text (*"Type an address above to auto-fill the fields below"*) rather than by overriding focus order.
+
+---
+
 ## Component: Search for an Address
 
 ### States
