@@ -189,7 +189,7 @@ const s = {
 // ─── Components ───
 function SearchIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ position: "absolute", left: 10, top: 10, color: "#999" }}>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ position: "absolute", left: 10, top: 10, color: "#555" }}>
       <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" strokeWidth="1.3" />
       <line x1="10" y1="10" x2="14" y2="14" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
@@ -309,7 +309,7 @@ function DropdownResults({ results, onSelect }) {
           {r.street_line}{r.secondary ? ` ${r.secondary}` : ""}{r.entries > 0 && <span style={{ fontSize: 11, color: "#888" }}> ({r.entries} entries)</span>}
           {" — "}
           <strong style={{ fontWeight: 600, color: "#333" }}>{r.city}, {r.state}</strong>{" "}
-          <span style={{ color: "#888" }}>{r.zipcode}</span>
+          <span style={{ color: "#333" }}>{r.zipcode}</span>
         </div>
       ))}
     </div>

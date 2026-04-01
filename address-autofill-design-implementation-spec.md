@@ -36,7 +36,7 @@ Use these values for all new UI in this feature. They are matched to existing Bl
 | Dropdown items | 12px | 400 | `#333` |
 | Dropdown city/state | 12px | 600 | `#333` |
 | Dropdown entry count | 11px | 400 | `#999` |
-| Dropdown zipcode | 12px | 400 | `#999` |
+| Dropdown zipcode | 12px | 400 | `#333` |
 | Confirmation card | 12px | 400 | `#555` |
 | Helper text | 11px | 400 italic | `#aaa` |
 | "Cleared" flash label | 10px | 500 | `#4caf50` |
@@ -96,7 +96,7 @@ This was explicitly considered and declined for two reasons:
 
 - **Label:** "Search for an Address" — `fontSize: 14px`, `fontWeight: 500`, `color: #999`
 - **Placeholder:** "Start typing an address..." — `color: #aaa`
-- **Icon:** Magnifying glass, positioned left (absolute, 10px left, 11px top). Color: `#999` idle, `#4caf50` active.
+- **Icon:** Magnifying glass, positioned left (absolute, 10px left, 11px top). Color: `#555` idle, `#4caf50` active. 8px gap between icon and text (padding-left: 32px with icon right edge at 24px).
 - **Active state:** Border `1px solid #4caf50`. No box-shadow.
 - **Idle state:** Border `1px solid #d0d0d0`.
 - **Focus state:** Border `1px solid #4caf50` (matches Bloomerang's existing field focus convention).
@@ -124,7 +124,7 @@ Each suggestion contains: `street_line`, `secondary`, `city`, `state`, `zipcode`
 - `(N entries)`: fontSize 11, color `#999`
 - Em dash separator (`—`)
 - **City, State**: `fontWeight: 600`, color `#333` — this is the primary disambiguation signal
-- `zipcode`: color `#999`
+- `zipcode`: color `#333` — matches city/state for readability, especially against green hover background
 
 **Interaction:**
 

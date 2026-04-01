@@ -122,7 +122,7 @@ const s = {
 
 function SearchIcon({ active }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ position: "absolute", left: 10, top: 11, color: active ? colors.green : "#999", pointerEvents: "none" }}>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" style={{ position: "absolute", left: 10, top: 11, color: active ? colors.green : "#555", pointerEvents: "none" }}>
       <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" strokeWidth="1.3" />
       <line x1="10" y1="10" x2="14" y2="14" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
     </svg>
@@ -296,7 +296,7 @@ export default function App() {
                             <span style={{ fontWeight: 600, color: colors.grayDark }}>
                               {" "}&mdash; {r.city}, {r.state}
                             </span>
-                            <span style={{ color: colors.grayMed }}> {r.zipcode}</span>
+                            <span style={{ color: colors.grayDark }}> {r.zipcode}</span>
                           </span>
                         </div>
                       ))}
