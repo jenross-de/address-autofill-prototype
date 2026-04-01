@@ -259,14 +259,14 @@ function SelectField({ label, value, variant = "default", green, style: extraSty
   );
 }
 
-function Checks({ primaryChecked = true }) {
+function Checks({ primaryChecked = true, badAddressChecked = false }) {
   return (
     <div style={s.checkRow}>
       <div style={s.checkItem}>
         <div style={s.checkBox(primaryChecked)}>{primaryChecked ? "✓" : ""}</div> Primary?
       </div>
       <div style={s.checkItem}>
-        <div style={s.checkBox(false)}></div> Bad Address?
+        <div style={s.checkBox(badAddressChecked)}>{badAddressChecked ? "✓" : ""}</div> Bad Address?
       </div>
     </div>
   );
@@ -406,7 +406,7 @@ function OptionAForm({ flow, step }) {
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
           <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked />
+          <Checks primaryChecked badAddressChecked />
         </>
       );
     }
@@ -433,7 +433,7 @@ function OptionAForm({ flow, step }) {
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
           <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked />
+          <Checks primaryChecked badAddressChecked />
         </>
       );
     }
@@ -533,190 +533,190 @@ function OptionAForm({ flow, step }) {
   return null;
 }
 
-// ─── Option B: Street-first progressive disclosure ───
-function OptionBForm({ flow, step }) {
-  if (flow === "new") {
-    if (step === 0) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <div style={{ marginBottom: 10 }}>
-            <div style={s.searchLabel}>Search for an Address</div>
-            <div style={{ position: "relative" }}>
-              <div style={s.searchInput(false)}>
-                <SearchIcon />
-                <span style={{}}>Start typing a street address...</span>
-              </div>
-            </div>
-          </div>
-          <SelectField label="Type" value="Home" green />
-          <Checks />
-        </>
-      );
-    }
-    if (step === 1) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <div style={{ marginBottom: 10 }}>
-            <div style={s.searchLabel}>Search for an Address</div>
-            <div style={{ position: "relative" }}>
-              <div style={s.searchInput(true)}>
-                <SearchIcon />
-                <span style={{}}>135 N Penn</span>
-              </div>
-              <DropdownResults results={MOCK_RESULTS} onSelect={() => {}} />
-            </div>
-          </div>
-          <SelectField label="Type" value="Home" green />
-          <Checks />
-        </>
-      );
-    }
-    if (step === 2) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <Field label="Address" tall value="135 N Pennsylvania St" />
-          <Field label="City" value="Indianapolis" />
-          <SelectField label="State" value="IN" />
-          <Field label="ZIP Code" value="46204" />
-          <SelectField label="Type" value="Home" green />
-          <Checks />
-        </>
-      );
-    }
-  }
-
-  if (flow === "edit") {
-    if (step === 0) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <SearchField idle />
-          <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
-          <Field label="City" value={EXISTING_ADDRESS.city} />
-          <SelectField label="State" value={EXISTING_ADDRESS.state} />
-          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
-          <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked />
-        </>
-      );
-    }
-    if (step === 1) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <div style={{ marginBottom: 10 }}>
-            <div style={s.searchLabel}>Search for an Address</div>
-            <div style={{ position: "relative" }}>
-              <div style={s.searchInput(true)}>
-                <SearchIcon />
-                <span style={{}}>135 N Pennsylvania</span>
-              </div>
-            </div>
-            <ConfirmBar
-              address={MOCK_RESULTS[0]}
-              onReplace={() => {}}
-              onCancel={() => {}}
-            />
-          </div>
-          <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
-          <Field label="City" value={EXISTING_ADDRESS.city} />
-          <SelectField label="State" value={EXISTING_ADDRESS.state} />
-          <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
-          <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked />
-        </>
-      );
-    }
-    if (step === 2) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <SearchField idle />
-          <Field label="Address" tall value="135 N Pennsylvania St" />
-          <Field label="City" value="Indianapolis" />
-          <SelectField label="State" value="IN" />
-          <Field label="ZIP Code" value="46204" />
-          <SelectField label="Type" value="Home" green />
-          <Checks primaryChecked />
-        </>
-      );
-    }
-  }
-
-  if (flow === "noResults") {
-    if (step === 0) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <div style={{ marginBottom: 10 }}>
-            <div style={s.searchLabel}>Search for an Address</div>
-            <div style={{ position: "relative" }}>
-              <div style={s.searchInput(true)}>
-                <SearchIcon />
-                <span style={{}}>2891 Elm St Springfield</span>
-              </div>
-              <NoResultsMessage />
-            </div>
-          </div>
-          <SelectField label="Type" value="Home" green />
-          <Checks />
-        </>
-      );
-    }
-    if (step === 1) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <SearchField idle />
-          <Field label="Address" tall value="2891 Elm St" variant="focus" />
-          <Field label="City" value="Springfield" />
-          <SelectField label="State" value="" variant="placeholder" />
-          <Field label="ZIP Code" value="" variant="placeholder" />
-          <SelectField label="Type" value="Home" green />
-          <Checks />
-        </>
-      );
-    }
-    if (step === 2) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <div style={{ marginBottom: 10 }}>
-            <div style={s.searchLabel}>Search for an Address</div>
-            <div style={{ position: "relative" }}>
-              <div style={s.searchInput(true)}>
-                <SearchIcon />
-                <span style={{}}>PO Box 1234 Zionsville</span>
-              </div>
-              <POBoxWarning />
-            </div>
-          </div>
-          <SelectField label="Type" value="Home" green />
-          <Checks />
-        </>
-      );
-    }
-    if (step === 3) {
-      return (
-        <>
-          <SelectField label="Country" value="United States" />
-          <SearchField idle />
-          <Field label="Address" tall value="618 N Elm St" variant="focus" />
-          <Field label="City" value="Zionsville" />
-          <SelectField label="State" value="IN" />
-          <Field label="ZIP Code" value="46077" />
-          <SelectField label="Type" value="Home" green />
-          <Checks />
-        </>
-      );
-    }
-  }
-
-  return null;
-}
+// // ─── Option B: Street-first progressive disclosure ───
+// function OptionBForm({ flow, step }) {
+//   if (flow === "new") {
+//     if (step === 0) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <div style={{ marginBottom: 10 }}>
+//             <div style={s.searchLabel}>Search for an Address</div>
+//             <div style={{ position: "relative" }}>
+//               <div style={s.searchInput(false)}>
+//                 <SearchIcon />
+//                 <span style={{}}>Start typing a street address...</span>
+//               </div>
+//             </div>
+//           </div>
+//           <SelectField label="Type" value="Home" green />
+//           <Checks />
+//         </>
+//       );
+//     }
+//     if (step === 1) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <div style={{ marginBottom: 10 }}>
+//             <div style={s.searchLabel}>Search for an Address</div>
+//             <div style={{ position: "relative" }}>
+//               <div style={s.searchInput(true)}>
+//                 <SearchIcon />
+//                 <span style={{}}>135 N Penn</span>
+//               </div>
+//               <DropdownResults results={MOCK_RESULTS} onSelect={() => {}} />
+//             </div>
+//           </div>
+//           <SelectField label="Type" value="Home" green />
+//           <Checks />
+//         </>
+//       );
+//     }
+//     if (step === 2) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <Field label="Address" tall value="135 N Pennsylvania St" />
+//           <Field label="City" value="Indianapolis" />
+//           <SelectField label="State" value="IN" />
+//           <Field label="ZIP Code" value="46204" />
+//           <SelectField label="Type" value="Home" green />
+//           <Checks />
+//         </>
+//       );
+//     }
+//   }
+// 
+//   if (flow === "edit") {
+//     if (step === 0) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <SearchField idle />
+//           <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
+//           <Field label="City" value={EXISTING_ADDRESS.city} />
+//           <SelectField label="State" value={EXISTING_ADDRESS.state} />
+//           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
+//           <SelectField label="Type" value="Home" green />
+//           <Checks primaryChecked />
+//         </>
+//       );
+//     }
+//     if (step === 1) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <div style={{ marginBottom: 10 }}>
+//             <div style={s.searchLabel}>Search for an Address</div>
+//             <div style={{ position: "relative" }}>
+//               <div style={s.searchInput(true)}>
+//                 <SearchIcon />
+//                 <span style={{}}>135 N Pennsylvania</span>
+//               </div>
+//             </div>
+//             <ConfirmBar
+//               address={MOCK_RESULTS[0]}
+//               onReplace={() => {}}
+//               onCancel={() => {}}
+//             />
+//           </div>
+//           <Field label="Address" tall value={EXISTING_ADDRESS.line1} />
+//           <Field label="City" value={EXISTING_ADDRESS.city} />
+//           <SelectField label="State" value={EXISTING_ADDRESS.state} />
+//           <Field label="ZIP Code" value={EXISTING_ADDRESS.zip} />
+//           <SelectField label="Type" value="Home" green />
+//           <Checks primaryChecked />
+//         </>
+//       );
+//     }
+//     if (step === 2) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <SearchField idle />
+//           <Field label="Address" tall value="135 N Pennsylvania St" />
+//           <Field label="City" value="Indianapolis" />
+//           <SelectField label="State" value="IN" />
+//           <Field label="ZIP Code" value="46204" />
+//           <SelectField label="Type" value="Home" green />
+//           <Checks primaryChecked />
+//         </>
+//       );
+//     }
+//   }
+// 
+//   if (flow === "noResults") {
+//     if (step === 0) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <div style={{ marginBottom: 10 }}>
+//             <div style={s.searchLabel}>Search for an Address</div>
+//             <div style={{ position: "relative" }}>
+//               <div style={s.searchInput(true)}>
+//                 <SearchIcon />
+//                 <span style={{}}>2891 Elm St Springfield</span>
+//               </div>
+//               <NoResultsMessage />
+//             </div>
+//           </div>
+//           <SelectField label="Type" value="Home" green />
+//           <Checks />
+//         </>
+//       );
+//     }
+//     if (step === 1) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <SearchField idle />
+//           <Field label="Address" tall value="2891 Elm St" variant="focus" />
+//           <Field label="City" value="Springfield" />
+//           <SelectField label="State" value="" variant="placeholder" />
+//           <Field label="ZIP Code" value="" variant="placeholder" />
+//           <SelectField label="Type" value="Home" green />
+//           <Checks />
+//         </>
+//       );
+//     }
+//     if (step === 2) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <div style={{ marginBottom: 10 }}>
+//             <div style={s.searchLabel}>Search for an Address</div>
+//             <div style={{ position: "relative" }}>
+//               <div style={s.searchInput(true)}>
+//                 <SearchIcon />
+//                 <span style={{}}>PO Box 1234 Zionsville</span>
+//               </div>
+//               <POBoxWarning />
+//             </div>
+//           </div>
+//           <SelectField label="Type" value="Home" green />
+//           <Checks />
+//         </>
+//       );
+//     }
+//     if (step === 3) {
+//       return (
+//         <>
+//           <SelectField label="Country" value="United States" />
+//           <SearchField idle />
+//           <Field label="Address" tall value="618 N Elm St" variant="focus" />
+//           <Field label="City" value="Zionsville" />
+//           <SelectField label="State" value="IN" />
+//           <Field label="ZIP Code" value="46077" />
+//           <SelectField label="Type" value="Home" green />
+//           <Checks />
+//         </>
+//       );
+//     }
+//   }
+// 
+//   return null;
+// }
 
 // ─── Step descriptions ───
 const STEP_LABELS = {
@@ -728,8 +728,8 @@ const STEP_LABELS = {
     ],
     edit: [
       "Form loads with existing data. Note 'Indpls' in City (non-standard).",
-      "User selects from search — confirmation bar appears inline. Existing fields dim.",
-      "After Replace: fields update with a brief yellow flash.",
+      "User selects from search — confirmation bar appears inline.",
+      "After Replace: fields update with a brief yellow flash. Bad Address flag is automatically cleared.",
     ],
     noResults: [
       "User searches a real address — no results found. Message prompts manual entry.",
@@ -738,25 +738,25 @@ const STEP_LABELS = {
       "User types a street address manually. Search remains available to retry.",
     ],
   },
-  B: {
-    new: [
-      "Only Country and Street Address field visible. Minimal form — rest of fields are hidden until an address is entered.",
-      "User types — dropdown appears inline on the street field. Same validated suggestions.",
-      "User selects a result. Address, City, State, ZIP fields appear and populate with a brief yellow flash. Progressive disclosure.",
-    ],
-    edit: [
-      "Existing address shows all fields. Search field sits above, same as new address flow.",
-      "User types in search. Confirmation bar appears. Existing fields dim.",
-      "After Replace: fields update with a brief yellow flash.",
-    ],
-    noResults: [
-      "User searches a real address — no results found. Message prompts manual entry.",
-      "User fills in fields manually. Search available above to retry.",
-      "User types 'PO Box...' — warning appears. Fields below remain empty.",
-      "User types a street address manually. Search available above to retry.",
-    ],
-  },
-};
+  //   B: {
+  //     new: [
+  //       "Only Country and Street Address field visible. Minimal form — rest of fields are hidden until an address is entered.",
+  //       "User types — dropdown appears inline on the street field. Same validated suggestions.",
+  //       "User selects a result. Address, City, State, ZIP fields appear and populate with a brief yellow flash. Progressive disclosure.",
+  //     ],
+  //     edit: [
+  //       "Existing address shows all fields. Search field sits above, same as new address flow.",
+  //       "User types in search. Confirmation bar appears. Existing fields dim.",
+  //       "After Replace: fields update with a brief yellow flash.",
+  //     ],
+  //     noResults: [
+  //       "User searches a real address — no results found. Message prompts manual entry.",
+  //       "User fills in fields manually. Search available above to retry.",
+  //       "User types 'PO Box...' — warning appears. Fields below remain empty.",
+  //       "User types a street address manually. Search available above to retry.",
+  //     ],
+  //   },
+  // };
 
 // ─── Main App ───
 export default function App() {
@@ -772,7 +772,7 @@ export default function App() {
 
   const optionDescs = {
     A: "Search field is a separate element between Country and Address fields. All form fields are always visible. Search is an optional shortcut — user can skip it and type directly into fields.",
-    B: "Street Address field doubles as the search input. For new addresses, only the street field shows initially — City, State, ZIP appear after a selection (progressive disclosure). For edits, all fields show since they have data, with search below as a 'replace' action.",
+    // B: "Street Address field doubles as the search input. For new addresses, only the street field shows initially — City, State, ZIP appear after a selection (progressive disclosure). For edits, all fields show since they have data, with search below as a replace action.",
   };
 
   return (
@@ -782,9 +782,9 @@ export default function App() {
         <button style={s.tab(option === "A")} onClick={() => setOption("A")}>
           Option A: Separate Search Field
         </button>
-        <button style={s.tab(option === "B")} onClick={() => setOption("B")}>
+        {/* <button style={s.tab(option === "B")} onClick={() => setOption("B")}>
           Option B: Street-First Progressive
-        </button>
+        </button> */}
       </div>
 
       <div style={s.optionDesc}>{optionDescs[option]}</div>
@@ -846,9 +846,9 @@ export default function App() {
               <CRMHeader />
               {option === "A" ? (
                 <OptionAForm flow={flow} step={step} />
-              ) : (
-                <OptionBForm flow={flow} step={step} />
-              )}
+              // ) : (
+              //   <OptionBForm flow={flow} step={step} />
+              // )}
             </div>
             <div style={s.rightPanel}>
               <div style={{ border: "1px solid #e0e0e0", borderRadius: 2 }}>
