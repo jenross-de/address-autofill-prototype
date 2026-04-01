@@ -243,7 +243,6 @@ function Field({ label, value, variant = "default", green, hint, style: extraSty
       </label>
       <div style={s.input(variant)}>
         {value}
-        {variant === "autofill" && <Dot />}
       </div>
     </div>
   );
@@ -255,7 +254,6 @@ function SelectField({ label, value, variant = "default", green, style: extraSty
       <label style={green ? s.labelGreen : s.label}>{label}</label>
       <div style={s.select(variant)}>
         {value}
-        {variant === "autofill" && <Dot />}
       </div>
     </div>
   );
@@ -274,12 +272,11 @@ function Checks({ primaryChecked = true }) {
   );
 }
 
-function SearchField({ active, value, idle, sublabel }) {
+function SearchField({ active, value, idle }) {
   return (
     <div style={s.searchWrap}>
       <div style={s.searchLabel}>
-        Search for an Address{" "}
-        {sublabel && <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0, color: colors.grayLight }}>{sublabel}</span>}
+        Search for an Address
       </div>
       <div style={{ position: "relative" }}>
         <div style={s.searchInput(active)}>
@@ -360,7 +357,7 @@ function OptionAForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
-          <SearchField idle sublabel="" />
+          <SearchField idle />
           <Field label="Address" value="" variant="placeholder" />
           <Field label="City" value="" variant="placeholder" />
           <SelectField label="State" value="" variant="placeholder" />
@@ -414,7 +411,7 @@ function OptionAForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
-          <SearchField idle sublabel="— or edit fields below" />
+          <SearchField idle />
           <Field label="Address" value={EXISTING_ADDRESS.line1} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
@@ -455,7 +452,7 @@ function OptionAForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
-          <SearchField idle sublabel="— or edit fields below" />
+          <SearchField idle />
           <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
           <Field label="City" value="Indianapolis" variant="autofill" />
           <SelectField label="State" value="IN" variant="autofill" />
@@ -608,7 +605,7 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
-          <SearchField idle sublabel="— or edit fields below" />
+          <SearchField idle />
           <Field label="Address" value={EXISTING_ADDRESS.line1} />
           <Field label="City" value={EXISTING_ADDRESS.city} />
           <SelectField label="State" value={EXISTING_ADDRESS.state} />
@@ -649,7 +646,7 @@ function OptionBForm({ flow, step }) {
       return (
         <>
           <SelectField label="Country" value="United States" />
-          <SearchField idle sublabel="— or edit fields below" />
+          <SearchField idle />
           <Field label="Address" value="135 N Pennsylvania St" variant="autofill" />
           <Field label="City" value="Indianapolis" variant="autofill" />
           <SelectField label="State" value="IN" variant="autofill" />
