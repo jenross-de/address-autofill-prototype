@@ -313,9 +313,10 @@ V2 testing surfaced a Major issue: with editable fields, some users (mainly Volu
 
 **Styling:**
 
-- Flash: `background: #eaf6ea`
+- Flash: `background: #b8e8b8`
 - Transition out: `background 0.8s ease`
 - Total duration: ~800ms
+- Text color (`#202020`) against `#b8e8b8` yields ~8.5:1 contrast ratio — fully readable during the flash
 
 **Note:** This is a green variant of the classic Yellow Fade Technique. The 0.8s duration is intentionally shorter than the Bad Address checkbox flash (1500ms) — it is a directional signal ("look here"), not a persistent status indicator.
 
