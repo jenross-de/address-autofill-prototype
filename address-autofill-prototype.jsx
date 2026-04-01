@@ -94,7 +94,7 @@ const s = {
   body: { flex: 1, background: "white", display: "flex", flexDirection: "column" },
   contentRow: { display: "flex", flex: 1 },
   main: { flex: 1, padding: "18px 24px 24px" },
-  rightPanel: { width: 240, borderLeft: "1px solid #e5e5e5", padding: "16px 18px", background: "white" },
+  rightPanel: { width: 240, borderLeft: "1px solid #e0e0e0", padding: "16px 18px", background: "white" },
   header: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 24px", borderBottom: "1px solid #e0e0e0" },
   title: { fontSize: 18, fontWeight: 500, color: colors.grayDark },
   btnCancel: { fontSize: 12, padding: "6px 16px", borderRadius: 3, border: "1px solid #ccc", background: "white", color: "#555", cursor: "pointer", marginRight: 6, fontFamily: "'Prompt', sans-serif" },
